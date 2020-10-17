@@ -1,18 +1,28 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import 'react-native-gesture-handler';
+import AppNavigation from './src/navigation/AppNavigation';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+const App = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userToken, setUserToken] = React.useState(false);
 
-  render() {
-    return (
-      <View>
-        <Text> App </Text>
-      </View>
-    );
-  }
+  const authContext = React.useMemo(() => ({
+    signIn: () => {
+      setUserToken(null);
+      setIsLoading(false);
+    },
+    signOut: () => {
+      setUserToken(null);
+      setIsLoading(false);
+    },
+    signUp: () => {
+      setUserToken(null);
+      setIsLoading(false)
+    }
+  }));
+  return (
+    <AppNavigation userToken={userToken}></AppNavigation>
+  );
 }
+
+export default App;

@@ -1,0 +1,37 @@
+// Google SignIn user Info
+{
+    "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjdkYTc4NjNlODYzN2Q2NjliYzJhMTI2MjJjZWRlMmE4ODEzZDExYjEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzNjU5MDM5MzYyOTQtMmxkN2RuMDdmNTdpNzQ5dmU3bWtuZHNpbjJ1bGR0Y2cuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzNjU5MDM5MzYyOTQtNHZhMW02YXNsMGdoMTI2aThlZDdtZXIxcjdjbmZrbmUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTU4Njg3NTYzMTc0Njk5MjI3NTgiLCJlbWFpbCI6InNvdW1lbi5kZXkwMjA1MjAwM0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IlNvdW1lbiBEZXkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1DelAtSDgyV3hXTS9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBQS9BTVp1dWNrOGRGbXRCZHZsdzlJWkttU3ZTQ1h5TWVGN3ZRL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJTb3VtZW4iLCJmYW1pbHlfbmFtZSI6IkRleSIsImxvY2FsZSI6ImVuIiwiaWF0IjoxNjAyNzMxMTAxLCJleHAiOjE2MDI3MzQ3MDF9.Njs3I67bQ0rkVn3dlqF7C5Qwz6wL8JrZAqdLj-6UoC58lSZVusv6pAREQ3eHW_TsImH7UXrv0uT-MvOfgtwoF6xyxNboQQ8EOXEmc38ifibsAdN74gtkiE7mOMhzX3QA1crCtLzfEir5RHgbVXeODk0Bv--msJDCh6mt7sGUo_DkHSB7RdBKPnwh2YBAO9KdVi21SFlrlF5RFTu1QWQVxRWQjl-e3SKpUKY6i3_PVhOyq0-78-ACxePsDiO9tpwYBe2P3aPDleF6JQFqfyozCMpmWgS7BUz_pcsiZD2cLSxUTixU-RmrXA5yvjdkRk-Xe7qOe6uJbB-ghEVAN-z6cw",
+    "scopes": [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email"
+    ],
+    "serverAuthCode": "4/5QHUfnI6evlEuz_7S4sodBf2UUxmiu-OpyGZLcsPfKqvavZfvD-8LfhUNbG5q_0kr4EZHUWLXxX0bbST5LdHiVY",
+    "user": {
+        "email": "soumen.dey02052003@gmail.com",
+        "familyName": "Dey",
+        "givenName": "Soumen",
+        "id": "115868756317469922758",
+        "name": "Soumen Dey",
+        "photo": "https://lh5.googleusercontent.com/-CzP-H82WxWM/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuck8dFmtBdvlw9IZKmSvSCXyMeF7vQ/s96-c/photo.jpg"
+    }
+}
+// Facebook SignIn user info
+
+{
+    "accessToken": "EAAmP2b0mxwIBAIjmEMrSBII2OIV0i36zZCZBraEkEHrqW6IvTZCBIId1ThUFbUqZAXONO56drG5Oah3p5JxaZAEoJeLIWSxiQFgRcuQrpS8eE8AWfxGZAkGZBWB5rFULJ9WbVZCvpVV7CIhUpQfZBRJdT9AUPVSelOOEluz6mB5TKTxGBBFHSHhqnQuSeoZBRKrBZBHiiTevOJVmg9zc1YDsvQUiwwhH9dbs9UZD",
+    "accessTokenSource": "FACEBOOK_APPLICATION_SERVICE",
+    "applicationID": "2691440134506242",
+    "dataAccessExpirationTime": 1610504047000,
+    "declinedPermissions": [],
+    "expirationTime": 1607912047000,
+    "expiredPermissions": [],
+    "lastRefreshTime": 1602732993692,
+    "permissions": [
+        "public_profile"
+    ],
+    "userID": "2923987211155958"
+}
+
+// -----
+
+{"id": "2923987211155958", "name": "Kartick Dey KD"}

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "365903936294",
+    "firebase_url": "https://fistore-dac9e.firebaseio.com",
+    "project_id": "fistore-dac9e",
+    "storage_bucket": "fistore-dac9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365903936294:android:fa52d2fe8045f97e219fe7",
+        "android_client_info": {
+          "package_name": "com.fistore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365903936294-2ld7dn07f57i749ve7mkndsin2uldtcg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fistore",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "365903936294-4va1m6asl0gh126i8ed7mer1r7cnfkne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg1GnGH7UFAishPqYME3DQzxSZ2Q2vweQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365903936294-4va1m6asl0gh126i8ed7mer1r7cnfkne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

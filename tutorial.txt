@@ -1,0 +1,11 @@
+<Stack.Navigator
+  screenOptions={{
+    headerShown: false
+  }}
+>
+  <Stack.Screen name="route-name" component={ScreenComponent} />
+</Stack.Navigator>
+
+------------- Google Sign in key---------------
+Project/Fistore-React-Native/android/app$ keytool -exportcert -alias androiddebugkey -keystore debug.keystore -list -v
+keytool -exportcert -alias androiddebugkey -keystore path-to-debug-or-production-keystore -list -v

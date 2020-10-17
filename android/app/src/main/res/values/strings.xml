@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Fistore</string>
+    <string name="facebook_app_id">2691440134506242</string>
+<string name="fb_login_protocol_scheme">fb2691440134506242</string>
 </resources>
