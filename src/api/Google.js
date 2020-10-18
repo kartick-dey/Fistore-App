@@ -9,6 +9,7 @@ GoogleSignin.configure({
 const loginWithGoogle = async (callback) => {
     try {
         await GoogleSignin.hasPlayServices();
+        const user = await GoogleSignin.signIn();
         const { idToken, accessToken } = await GoogleSignin.getTokens();
         console.log('Accestoken from Google: ', accessToken);
         return callback(null, accessToken);

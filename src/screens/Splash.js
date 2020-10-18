@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
+import React, { Component, useEffect } from 'react';
+import { View, AsyncStorage, ActivityIndicator } from 'react-native';
 import BrandLogo from '../commons/brandLogo';
 
 export default class Splash extends Component {
@@ -22,6 +22,7 @@ export default class Splash extends Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="red"></ActivityIndicator>
         <BrandLogo></BrandLogo>
       </View>
     );

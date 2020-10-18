@@ -1,27 +1,23 @@
 import React from 'react';
 import 'react-native-gesture-handler';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+
 import AppNavigation from './src/navigation/AppNavigation';
+import authReducer from './src/store/reducers/auth';
+
+const rootReducer = combineReducers({
+  auth: authReducer
+});
+
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const App = () => {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(false);
-
-  const authContext = React.useMemo(() => ({
-    signIn: () => {
-      setUserToken(null);
-      setIsLoading(false);
-    },
-    signOut: () => {
-      setUserToken(null);
-      setIsLoading(false);
-    },
-    signUp: () => {
-      setUserToken(null);
-      setIsLoading(false)
-    }
-  }));
   return (
-    <AppNavigation userToken={userToken}></AppNavigation>
+    <Provider store={store}>
+      <AppNavigation userToken={false}></AppNavigation>
+    </Provider>
   );
 }
 
