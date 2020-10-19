@@ -1,6 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { SafeAreaView } from 'react-native';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 
@@ -16,7 +17,9 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 const App = () => {
   return (
     <Provider store={store}>
-      <AppNavigation userToken={false}></AppNavigation>
+      <SafeAreaView style={{ flex: 1}}>
+      <AppNavigation></AppNavigation>
+    </SafeAreaView>
     </Provider>
   );
 }

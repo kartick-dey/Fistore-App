@@ -1,30 +1,56 @@
-import React, { Component, useEffect } from 'react';
-import { View, AsyncStorage, ActivityIndicator } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import BrandLogo from '../commons/brandLogo';
+import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default class Splash extends Component {
-  constructor(props) {
-    // console.log('Splash: ', props);
-    super(props);
-    this.state = {};
-  }
+import * as authActions from '../store/actions/auth';
 
-  componentDidMount() {
-    this.checkAuth();
-  }
+const Splash = (props) => {
 
-  checkAuth = () => {
-    setTimeout(() => {
-        this.props.navigation.navigate('Login');
-    }, 2000);
-  };
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="red"></ActivityIndicator>
-        <BrandLogo></BrandLogo>
-      </View>
-    );
-  }
-}
+  useEffect(() => {
+    const checkAuth = async () => {
+      console.log('1');
+      const userData = await AsyncStorage.getItem('userData');
+      console.log("2");
+      console.log("Useradata fromAsync: ", userData);
+      console.log("3");
+      if (!userData) {
+        console.log("4");
+        props.navigation.navigate('Auth');
+        return;
+      }
+      console.log("5");
+      const transforUserData = JSON.parse(userData);
+      const {jwtToken, userId, expiryDate} = transforUserData;
+      const expirationDate = new Date(expiryDate);
+      console.log("6");
+  
+      if (expirationDate <= new Date() || !jwtToken || !userId) {
+        console.log("7");
+        props.navigation.navigate('Auth');
+        return;
+      }
+      props.navigation.navigate('Main');
+      console.log("8");
+      dispatch(authActions.authenticate(transforUserData));
+      console.log("10 ");     
+      // setTimeout(() => {
+      //     this.props.navigation.navigate('Auth');
+      // }, 2000);
+    };
+
+    checkAuth();
+  }, [dispatch]);
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {/* <ActivityIndicator size="large" color="red"></ActivityIndicator> */}
+      <BrandLogo></BrandLogo>
+    </View>
+  );
+};
+
+export default Splash;

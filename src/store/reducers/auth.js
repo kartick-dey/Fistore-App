@@ -1,13 +1,14 @@
-import { AUTHENTICATE } from '../actions/auth';
+import { AUTHENTICATE, LOGOUT } from '../actions/auth';
 
 const initialState = {
     jwtToken: '',
-    id: '',
+    userId: '',
     name: '',
     email: '',
     picture: '',
     uid: '',
-    provider: ''
+    provider: '',
+    expiryDate: Date,
 
 };
 
@@ -16,13 +17,16 @@ const authReducer = (state = initialState, action) => {
         case AUTHENTICATE:
             return {
                 jwtToken: action.jwtToken,
-                id: action.id,
+                userId: action.userId,
                 name: action.name,
                 email: action.email,
                 picture: action.picture,
                 uid: action.uid,
-                provider: action.provider
+                provider: action.provider,
+                expiryDate: action.expiryDate,
             }
+        case LOGOUT:
+            return initialState;
 
         default:
             return state;

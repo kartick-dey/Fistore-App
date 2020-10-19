@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
 
 const Login = (props) => {
-  console.log('Props: ', props);
   const [isLoading, setIsLoading] = useState(false);
 
   const bgGoogleButton = '#DB4437';
@@ -18,13 +17,13 @@ const Login = (props) => {
 
   const authenticationHandler = async (token, provider) => {
     try {
-      dispatch(authActions.authenticate(token, provider, (error, result) => {
+      dispatch(authActions.login(token, provider, (error, result) => {
         if (error) {
           setIsLoading(false);
           throw error
         }
-        props.navigation.navigate('Splash');
-        // setIsLoading(false);
+        props.navigation.navigate('Main');
+        setIsLoading(false);
       }));
     } catch (error) {
       console.log('Error while calling backend API')
