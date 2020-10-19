@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
+import Header from '../../commons/header';
+
 export default class Home extends Component {
     constructor(props) {
         // console.log('Home: ', props);
@@ -9,9 +11,14 @@ export default class Home extends Component {
         };
     }
 
+    openDrawer = () => {
+        this.props.navigation.openDrawer();
+    }
+
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+            <View style={{ flex: 1 }}>
+                <Header onOpenDrawer={this.openDrawer}></Header>
                 <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Home Screen </Text>
             </View>
         );

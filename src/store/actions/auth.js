@@ -20,7 +20,7 @@ export const authenticate = (userData) => {
 }
 
 // const API_URL = 'http://localhost:3000/api/v1.0/user'
-const API_URL = 'http://18.219.144.48:3000/api/v1.0/user';
+const API_URL = 'http://18.191.218.97:3000/api/v1.0/user';
 // const GET_USER_API_URL = 'http://34.217.37.7:3000/api/v1.0/user/me'
 
 const getUserInfo = (jwtToken, callback) => {

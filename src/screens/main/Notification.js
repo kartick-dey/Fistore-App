@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
+import Header from '../../commons/header';
+
 export default class Notification extends Component {
   constructor(props) {
     super(props);
@@ -8,10 +10,15 @@ export default class Notification extends Component {
     };
   }
 
+  openDrawer = () => {
+    this.props.navigation.openDrawer();
+}
+
   render() {
     return (
-      <View>
-        <Text> Notification </Text>
+      <View style={{ flex: 1 }}>
+         <Header onOpenDrawer={this.openDrawer}></Header>
+                <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Notification Screen </Text>
       </View>
     );
   }
