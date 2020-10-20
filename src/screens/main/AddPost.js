@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-import Header from '../../commons/header';
+import Header from '../../components/header';
 
-export default class Category extends Component {
+export default class AddPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ export default class Category extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header onOpenDrawer={this.openDrawer}></Header>
-                <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Caategory Screen </Text>
+                <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Add Post Screen </Text>
       </View>
     );
   }

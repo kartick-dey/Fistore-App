@@ -3,13 +3,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import HomeScreen from '../../screens/main/Home';
 import ProductScreen from '../../screens/main/Products';
 import ProductDetailsScreen from '../../screens/main/ProductDetails';
-import CategoryScreen from '../../screens/main/Category';
+import AddPostScreen from '../../screens/main/AddPost';
 import SavedScreen from '../../screens/main/Saved';
 import SearchScreen from '../../screens/main/Search';
 import NotificationScreen from '../../screens/main/Notification';
@@ -72,20 +73,21 @@ const MainTabScreens = (props) => {
                         <MaterialIcon name="home-outline" color={color} size={32} />
                     ),
                 }} />
-            <Tab.Screen name="Category" component={CategoryScreen}
-                options={{
-                    tabBarLabel: 'Category',
-                    tabBarColor: '#fff',
-                    tabBarIcon: ({ color }) => (
-                        <Icon name="grid-outline" color={color} size={24} />
-                    ),
-                }} />
+
             <Tab.Screen name="Search" component={SearchScreen}
                 options={{
                     tabBarLabel: 'Search',
                     tabBarColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <Icon name="search-circle-outline" color={color} size={33} />
+                        <FeatherIcon name="search" color={color} size={26} />
+                    ),
+                }} />
+            <Tab.Screen name="Add Post" component={AddPostScreen}
+                options={{
+                    tabBarLabel: 'AddPost',
+                    tabBarColor: '#fff',
+                    tabBarIcon: ({ color }) => (
+                        <FeatherIcon name="plus-square" color={color} size={27} />
                     ),
                 }} />
             <Tab.Screen name="Notification" component={NotificationScreen}
@@ -108,15 +110,6 @@ const MainTabScreens = (props) => {
     );
 };
 
-// const screenOptions = (label, icon, size, color) => {
-//     return {
-//         tabBarLabel: 'Home',
-//         tabBarColor: '#fff',
-//         tabBarIcon: ({ color }) => (
-//             <Icon name="home" color={color} size={27} />
-//         ),
-//     }
-// }
 
 const SideBarScreens = (props) => {
     return (

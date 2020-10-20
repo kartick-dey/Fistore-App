@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Header from '../../commons/header';
+import Header from '../../components/header';
 
 
 export default class Cart extends Component {

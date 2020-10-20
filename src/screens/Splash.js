@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import BrandLogo from '../commons/brandLogo';
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import BrandLogo from '../components/brandLogo';
 import * as authActions from '../store/actions/auth';
 
 const Splash = (props) => {
@@ -27,8 +27,8 @@ const Splash = (props) => {
       const {jwtToken, userId, expiryDate} = transforUserData;
       const expirationDate = new Date(expiryDate);
       console.log("6");
-  
-      if (expirationDate <= new Date() || !jwtToken || !userId) {
+      // if (expirationDate <= new Date() || !jwtToken || !userId)
+      if ( !jwtToken || !userId ) {
         console.log("7");
         props.navigation.navigate('Auth');
         return;

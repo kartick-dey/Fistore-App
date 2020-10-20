@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Dimensions, ActivityIndicator, Alert } from 'react-native';
 import { FacebookApi } from '../api/Facebook';
 import { GoogleApi } from '../api/Google';
-import BrandLogo from '../commons/brandLogo';
-import LoginButton from '../commons/loginButton';
 import { useDispatch } from 'react-redux';
 import * as authActions from '../store/actions/auth';
+import LoginButton from '../components/loginButton';
+import BrandLogo from '../components/brandLogo';
 
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
