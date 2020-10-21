@@ -2,7 +2,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import axios from 'axios';
 
 import {API_URL} from '../../../apiEndpoint';
 

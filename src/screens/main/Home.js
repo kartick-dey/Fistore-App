@@ -13,7 +13,7 @@ const { height, width } = Dimensions.get('window');
 
 const Home = (props) => {
 
-    const products = useSelector(state => console.log("useSeletor: ", state));
+    const products = useSelector(state => state.products.products);
 
     const dispatch = useDispatch();
 
@@ -28,42 +28,54 @@ const Home = (props) => {
             }))
         };
         fetchAllProduct();
-    },[dispatch]);
+    }, [dispatch]);
 
     const openDrawer = () => {
         props.navigation.openDrawer();
     }
-        return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <Header onOpenDrawer={openDrawer}></Header>
-                <ScrollView scrollEventThrottle={16}>
-                    <View style={styles.bodyContainer}>
-                        <Text style={styles.heading}>Explore By Category?</Text>
-                        <View style={styles.categoryContainer}>
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <CategoryCard name="Fish Spawn" image={images.fish_spawn} />
-                                <CategoryCard name="Fish Seed" image={images.fish_seed} />
-                                <CategoryCard name="Fish" image={images.fish} />
-                                <CategoryCard name="Aqurium Fish" image={images.aqurium_fish} />
-                            </ScrollView>
-                        </View>
-                        <Text style={styles.heading}>Introducing Fistore Marketplace</Text>
-                        <Text style={styles.caption}>A collection of verified, best quality and low cost Fish Market and Aqurium Center</Text>
-                        <View style={styles.marketContainer}>
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                                <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_1} />
-                                <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_1} />
-                                <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_2} />
-                                <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_2} />
-                                <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_3} />
-                                <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_3} />
-                                <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_4} />
-                            </ScrollView>
-                        </View>
+    // const renderFishCard = ({ item }) => (
+    //     <FishCard 
+    //     image={images.fish_1} 
+    //     fishType="Fish" 
+    //     fishName="Katla" 
+    //     rating={3.5} />
+    // );
+    return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <Header onOpenDrawer={openDrawer}></Header>
+            <ScrollView scrollEventThrottle={16}>
+                <View style={styles.bodyContainer}>
+                    <Text style={styles.heading}>Explore By Category?</Text>
+                    <View style={styles.categoryContainer}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <CategoryCard name="Fish Spawn" image={images.fish_spawn} />
+                            <CategoryCard name="Fish Seed" image={images.fish_seed} />
+                            <CategoryCard name="Fish" image={images.fish} />
+                            <CategoryCard name="Aqurium Fish" image={images.aqurium_fish} />
+                        </ScrollView>
                     </View>
-                    <View style={{ backgroundColor: 'white' }}>
-                        <Text style={styles.heading}>Fishes Around the World</Text>
-                        <View style={styles.fishContainer}>
+                    <Text style={styles.heading}>Introducing Fistore Marketplace</Text>
+                    <Text style={styles.caption}>A collection of verified, best quality and low cost Fish Market and Aqurium Center</Text>
+                    <View style={styles.marketContainer}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_1} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_1} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_2} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_2} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_3} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_3} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_4} />
+                        </ScrollView>
+                    </View>
+                </View>
+                <View style={{ backgroundColor: 'white' }}>
+                    <Text style={styles.heading}>Fishes Around the World</Text>
+                    <View style={styles.fishContainer}>
+                        {/* <FlatList 
+                        data={products}
+                        horizontal={true}
+                        keyExtractor={(item) => item.userId}
+                        renderItem={renderFishCard} /> */}
                         <FishCard image={images.fish_1} fishType="Fish" fishName="Katla" rating={3.5}></FishCard>
                         <FishCard image={images.fish_2} fishType="Fish" fishName="Katla" rating={2.5}></FishCard>
                         <FishCard image={images.fish_3} fishType="Fish" fishName="Katla" rating={4.5}></FishCard>
@@ -72,11 +84,11 @@ const Home = (props) => {
                         <FishCard image={images.fish_6} fishType="Fish" fishName="Katla" rating={3.5}></FishCard>
                         <FishCard image={images.fish_7} fishType="Fish" fishName="Katla" rating={5}></FishCard>
                         <FishCard image={images.fish_8} fishType="Fish" fishName="Katla" rating={3}></FishCard>
-                        </View>
                     </View>
-                </ScrollView>
-            </View>
-        );
+                </View>
+            </ScrollView>
+        </View>
+    );
 
 }
 
@@ -110,9 +122,9 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     fishContainer: {
-        flexDirection: 'row', 
-        flexWrap: 'wrap', 
-        justifyContent: 'space-evenly', 
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly',
         marginBottom: 10
     }
 

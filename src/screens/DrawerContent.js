@@ -24,17 +24,28 @@ const DrawerContent = (props) => {
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme);
     }
-
     const dispatch = useDispatch();
+
+    const logoutHandler = async () => {
+        await dispatch(authActions.logout((error, result) => {
+            if (error) {
+                console.log('Error in Drawer: ', error);
+                return;
+            }
+            console.log(result);
+            props.navigation.closeDrawer();;
+            props.navigation.navigate('Auth');
+        }));
+    };
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection: 'row', marginTop: 15}}>
+                        <View style={{ flexDirection: 'row', marginTop: 15 }}>
                             <Avatar.Image source={Images.avater}
                                 size={50}></Avatar.Image>
-                            <View style={{ marginLeft: 15, flexDirection: 'column'}}>
+                            <View style={{ marginLeft: 15, flexDirection: 'column' }}>
                                 <Title style={styles.title}>Kartick Dey</Title>
                                 <Caption style={styles.caption}>@Itzkartick</Caption>
                             </View>
@@ -85,12 +96,12 @@ const DrawerContent = (props) => {
                         </DrawerItem>
                     </Drawer.Section>
                     <Drawer.Section title='Preference'>
-                        <TouchableRipple onPress={()=> {toggleTheme()}}>
+                        <TouchableRipple onPress={() => { toggleTheme() }}>
                             <View style={styles.preference}>
-                                <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-                                    <Text style={{ marginLeft: 17}}>Dark Theme</Text>
+                                <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                                    <Text style={{ marginLeft: 17 }}>Dark Theme</Text>
                                 </View>
-                                <View pointerEvents='none' style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+                                <View pointerEvents='none' style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end' }}>
                                     <Switch value={isDarkTheme}></Switch>
                                 </View>
                             </View>
@@ -104,10 +115,7 @@ const DrawerContent = (props) => {
                         <Icon name="exit-to-app" color={color} size={size}></Icon>
                     )}
                     label="Sign Out"
-                    onPress={() => {
-                        dispatch(authActions.logout());
-                        props.navigation.navigate('Auth');
-                    }}
+                    onPress={logoutHandler}
                 >
                 </DrawerItem>
             </Drawer.Section>

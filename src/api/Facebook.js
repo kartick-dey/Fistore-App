@@ -1,4 +1,4 @@
-import {AccessToken, LoginManager} from 'react-native-fbsdk'
+import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 const permissions = ['public_profile', 'email'];
 
@@ -25,7 +25,7 @@ const loginWithFacebook = (callback) => {
     .catch(error => {
         console.log("Error in facebook login: ", error);
         return callback("Error in facebook login")
-    })
+    });
 };
 
 export const FacebookApi = {
