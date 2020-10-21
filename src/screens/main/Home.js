@@ -1,31 +1,41 @@
-import React, { Component } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../components/header';
 import CategoryCard from '../../components/Home/CategoryCard';
 import FishCard from '../../components/Home/FishCard';
 import MarketCard from '../../components/Home/MarketCard';
 import images from '../../constants/images';
+import * as productActions from '../../store/actions/product';
 
 const { height, width } = Dimensions.get('window');
 
-export default class Home extends Component {
-    constructor(props) {
-        // console.log('Home: ', props);
-        super(props);
-        this.state = {
-            starCount: 3.5
+const Home = (props) => {
+
+    const products = useSelector(state => console.log("useSeletor: ", state));
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchAllProduct = async () => {
+            dispatch(productActions.getAllProducts((error, result) => {
+                if (error) {
+                    console.log("Error from Home : ", error);
+                    return;
+                }
+                console.log("Result from Home: ", result);
+            }))
         };
-    }
+        fetchAllProduct();
+    },[dispatch]);
 
-    openDrawer = () => {
-        this.props.navigation.openDrawer();
+    const openDrawer = () => {
+        props.navigation.openDrawer();
     }
-
-    render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <Header onOpenDrawer={this.openDrawer}></Header>
+                <Header onOpenDrawer={openDrawer}></Header>
                 <ScrollView scrollEventThrottle={16}>
                     <View style={styles.bodyContainer}>
                         <Text style={styles.heading}>Explore By Category?</Text>
@@ -67,7 +77,7 @@ export default class Home extends Component {
                 </ScrollView>
             </View>
         );
-    }
+
 }
 
 const styles = StyleSheet.create({
@@ -107,3 +117,6 @@ const styles = StyleSheet.create({
     }
 
 });
+
+
+export default Home;

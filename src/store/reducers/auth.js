@@ -6,7 +6,7 @@ const initialState = {
     name: '',
     email: '',
     picture: '',
-    uid: '',
+    providerUid: '',
     provider: '',
     expiryDate: Date,
 
@@ -21,7 +21,7 @@ const authReducer = (state = initialState, action) => {
                 name: action.name,
                 email: action.email,
                 picture: action.picture,
-                uid: action.uid,
+                providerUid: action.providerUid,
                 provider: action.provider,
                 expiryDate: action.expiryDate,
             }

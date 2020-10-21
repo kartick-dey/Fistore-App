@@ -65,7 +65,7 @@ const Login = (props) => {
         <BrandLogo></BrandLogo>
       </View>
       <View style={[styles.loginButtonContainer]}>
-        { isLoading ? (<ActivityIndicator size="large" color="red" style={{ opacity: 1, marginTop: 20}}></ActivityIndicator> ):
+        {isLoading ? (<ActivityIndicator size="large" color="red" style={{ opacity: 1, marginTop: 20 }}></ActivityIndicator>) :
           (<View>
             <LoginButton onPress={onGooglePress} bgColor={bgGoogleButton} iconName='google-plus' type="Google"></LoginButton>
             <LoginButton onPress={onFacebookPress} bgColor={bgFacebookButton} iconName='facebook' type="Facebook"></LoginButton>

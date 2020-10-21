@@ -1,6 +1,8 @@
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import API_URL from '../../../apiEndpoint';
+
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
@@ -13,18 +15,14 @@ export const authenticate = (userData) => {
         name: userData.name,
         email: userData.email,
         picture: userData.picture,
-        uid: userData.uid,
-        provider: userData.type,
+        providerUid: userData.providerUid,
+        provider: userData.provider,
         expiryDate: userData.expiryDate,
     };
 }
 
-// const API_URL = 'http://localhost:3000/api/v1.0/user'
-const API_URL = 'http://3.129.42.150:3000/api/v1.0/user';
-// const GET_USER_API_URL = 'http://34.217.37.7:3000/api/v1.0/user/me'
-
 const getUserInfo = (jwtToken, callback) => {
-    fetch(`${API_URL}/me`, {
+    fetch(`${API_URL}/user/me`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${jwtToken}`
@@ -39,7 +37,7 @@ const getUserInfo = (jwtToken, callback) => {
 
 export const login = (provider, token, callback) => {
     return dispatch => {
-        fetch(API_URL, {
+        fetch(`${API_URL}/user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,12 +65,12 @@ export const login = (provider, token, callback) => {
                             name: result.name,
                             email: result.email,
                             picture: result.picture,
-                            uid: result.provider.uid,
-                            provider: result.provider.type,
+                            providerUid: result.providerUid,
+                            provider: result.provider,
                             expiryDate: expirationDate,
                         });
                         saveToStorage(jsonData.jwtToken, result, expirationDate);
-                        return callback(null, 'Done');
+                        return callback(null, 'DONE');
 
                     }
                 });
@@ -97,8 +95,8 @@ const saveToStorage = (jwtToken, userdata, expirationDate) => {
         name: userdata.name,
         email: userdata.email,
         picture: userdata.picture,
-        uid: userdata.provider.uid,
-        provider: userdata.provider.type,
+        providerUid: userdata.providerUid,
+        provider: userdata.provider,
         expiryDate: expirationDate.toISOString(),
     }));
 }
