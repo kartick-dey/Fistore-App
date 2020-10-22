@@ -20,7 +20,8 @@ const Login = (props) => {
       dispatch(authActions.login(token, provider, (error, result) => {
         if (error) {
           setIsLoading(false);
-          throw error
+          alert(error);
+          return;
         }
         props.navigation.navigate('Main');
         setIsLoading(false);

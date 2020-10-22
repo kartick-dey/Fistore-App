@@ -1,19 +1,19 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
-import API_URL from '../../../apiEndpoint';
+import {API_URL} from '../../../apiEndpoint';
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 
-const getJwtToken = async () => {
+const getUserDetails = async () => {
     const userData = await AsyncStorage.getItem('userData');
     const transformedUserData = JSON.parse(userData);
-    const jwtToken = transformedUserData.jwtToken;
-    return jwtToken;
+    const { jwtToken, userId} = transformedUserData;
+    return { jwtToken, userId };
 };
 
 export const getAllProducts = (callback) => {
-    const jwtToken = getJwtToken();
+    const { jwtToken, userId } = getUserDetails();
 
     return dispatch => {
         fetch(`${API_URL}/product`, {
@@ -27,7 +27,8 @@ export const getAllProducts = (callback) => {
                 console.log('FETCHED: ', jsonData);
                 dispatch({
                     type: GET_PRODUCTS,
-                    products: jsonData
+                    products: jsonData,
+                    userId: userId
                 });
                 return callback(null, 'FETCHED');
             })
@@ -38,25 +39,26 @@ export const getAllProducts = (callback) => {
     }
 }
 
-export const createProduct = async (productData, callback) => {
-    const jwtToken = getJwtToken();
+export const createProduct = (productData, callback) => {
+    const { jwtToken, userId } = getUserDetails();
+    productData.append('userId', userId);
 
     return dispatch => {
         fetch(`${API_URL}/product`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${jwtToken}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             },
-            body: JSON.stringify(productData)
+            body: productData
         })
             .then(response => response.json())
             .then(jsonData => {
                 dispatch({
                     type: CREATE_PRODUCT,
-                    products: jsonData
+                    product: jsonData
                 });
-                return callback(null, 'CREAT+ED');
+                return callback(null, jsonData);
             })
             .catch(error => {
                 console.log("Error while creating a product: ", error);

@@ -16,12 +16,12 @@ const CategoryCard = (props) => {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        height: 130, 
+        height: 120, 
         width: 130, 
-        marginLeft: 10, 
         marginLeft: 10, 
         borderWidth: 0.5, 
         borderColor: "#dddddd",
+        backgroundColor: "#fff",
         borderRadius: 5
     },
     image: {
@@ -29,12 +29,15 @@ const styles = StyleSheet.create({
         width: null, 
         height: null, 
         resizeMode: 'cover',
-        borderRadius: 5
+        borderRadius: 5,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0
     },
     textConatiner: {
         flex: 1, 
-        paddingLeft: 10, 
-        paddingTop: 10
+        // paddingLeft: 10, 
+        paddingTop: 5,
+        alignItems: 'center'
     },
     name: {
         fontWeight: '700'

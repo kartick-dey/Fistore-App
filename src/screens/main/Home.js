@@ -6,6 +6,7 @@ import Header from '../../components/header';
 import CategoryCard from '../../components/Home/CategoryCard';
 import FishCard from '../../components/Home/FishCard';
 import MarketCard from '../../components/Home/MarketCard';
+import colors from '../../constants/colors';
 import images from '../../constants/images';
 import * as productActions from '../../store/actions/product';
 
@@ -33,13 +34,17 @@ const Home = (props) => {
     const openDrawer = () => {
         props.navigation.openDrawer();
     }
-    // const renderFishCard = ({ item }) => (
-    //     <FishCard 
-    //     image={images.fish_1} 
-    //     fishType="Fish" 
-    //     fishName="Katla" 
-    //     rating={3.5} />
-    // );
+    const renderFishCard = ({ item }) => (
+        <FishCard 
+        image={item.image} 
+        fishType={item.fishType} 
+        fishName={item.fishName}
+        location={item.location}
+        price={item.price}
+        unit={item.unit} 
+        postedAt = {item.createdAt}
+        rating={3.5} />
+    );
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Header onOpenDrawer={openDrawer}></Header>
@@ -71,19 +76,11 @@ const Home = (props) => {
                 <View style={{ backgroundColor: 'white' }}>
                     <Text style={styles.heading}>Fishes Around the World</Text>
                     <View style={styles.fishContainer}>
-                        {/* <FlatList 
+                        <FlatList 
                         data={products}
                         horizontal={true}
                         keyExtractor={(item) => item.userId}
-                        renderItem={renderFishCard} /> */}
-                        <FishCard image={images.fish_1} fishType="Fish" fishName="Katla" rating={3.5}></FishCard>
-                        <FishCard image={images.fish_2} fishType="Fish" fishName="Katla" rating={2.5}></FishCard>
-                        <FishCard image={images.fish_3} fishType="Fish" fishName="Katla" rating={4.5}></FishCard>
-                        <FishCard image={images.fish_4} fishType="Fish" fishName="Katla" rating={4}></FishCard>
-                        <FishCard image={images.fish_5} fishType="Fish" fishName="Katla" rating={3}></FishCard>
-                        <FishCard image={images.fish_6} fishType="Fish" fishName="Katla" rating={3.5}></FishCard>
-                        <FishCard image={images.fish_7} fishType="Fish" fishName="Katla" rating={5}></FishCard>
-                        <FishCard image={images.fish_8} fishType="Fish" fishName="Katla" rating={3}></FishCard>
+                        renderItem={renderFishCard} />
                     </View>
                 </View>
             </ScrollView>
@@ -125,7 +122,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-evenly',
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 2
     }
 
 });

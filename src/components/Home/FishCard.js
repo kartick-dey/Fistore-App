@@ -4,32 +4,50 @@ import colors from '../../constants/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
+import { IMG_ENDPOINT } from '../../../apiEndpoint';
 
 const { height, width } = Dimensions.get('window');
 
 const FishCard = (props) => {
+    const imageUrl = `${IMG_ENDPOINT}` + props.image;
+    const unit = props.unit.toLowerCase();
+    // console.log("PostedAt: ", typeof(new Date().getDay() - new Date(props.postedAt).getDay()));
+    let postedAt;
+    if ((new Date().getDay() - new Date(props.postedAt).getDay()) === 0) {
+        postedAt = 'Today'
+    } else {
+        postedAt = +(new Date().getDay() - new Date(props.postedAt).getDay()) + ' day ago';
+    }
+    // const postedAt = new Date(props.postedAt);
     return (
         <View style={styles.fisCard}>
-            <View style={{ flex: 2 }}>
-                <Image style={styles.image} source={props.image}></Image>
+            <View style={{ flex: 3 }}>
+                <Image style={styles.image} source={{ uri: imageUrl }}></Image>
                 <View style={styles.saveButton}>
-                    <FontAwesome name="bookmark" size={20} color={colors.primary}></FontAwesome>
+                    <View style={{ backgroundColor: 'white', padding: 5, justifyContent: 'center', alignItems: 'center'}}>
+                    <FontAwesome name="bookmark-o" size={20} color={colors.primary} />
+                    {/* <FontAwesome name="bookmark" size={20} color={colors.primary} /> */}
+                    <Text style={{ fontSize: 10, color: colors.primary, fontWeight: '700'}}>Save</Text>
+                    </View>
                 </View>
             </View>
             <View style={styles.textContainer}>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems:'center'}}>
-                    <View style={{ flex: 1, justifyContent: 'flex-start'}}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                         <Text style={styles.typeText}>{props.fishType}</Text>
                         <Text style={styles.nameText}>{props.fishName}</Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'space-evenly', paddingRight: 5}}>
-                        <Icon name="compass-outline" size={10} style={{ paddingVertical: 4}}>
-                            <Text style={{ fontSize: 10}}>Bankura</Text>
+                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'space-evenly', paddingRight: 5 }}>
+                        <Icon name="compass-outline" size={10} style={{ paddingVertical: 4 }}>
+                            <Text style={{ fontSize: 10, marginLeft: 5 }}>{props.location}</Text>
                         </Icon>
                         <FontAwesome name="inr" size={13} color={colors.primary}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 14}}> 20/kg</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 14 }}> {props.price}/{unit}</Text>
                         </FontAwesome>
                     </View>
+                </View>
+                <View>
+                    <Text style={styles.postedDate}>Posted: {postedAt}</Text>
                 </View>
 
                 <StarRating
@@ -49,8 +67,8 @@ const styles = StyleSheet.create({
     fisCard: {
         marginTop: 10,
         width: width / 2 - 15,
-        height: width / 2 - 15,
-        marginHorizontal: 5,
+        height: width / 2,
+        marginHorizontal: 6,
         borderWidth: 0.5,
         borderColor: '#dddddd',
         borderRadius: 5
@@ -67,10 +85,11 @@ const styles = StyleSheet.create({
         width: width / 2 - 15,
         paddingHorizontal: 10,
         position: 'absolute',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        display: "flex"
     },
     textContainer: {
-        flex: 1, justifyContent: 'space-evenly', paddingLeft: 10
+        flex: 2, justifyContent: 'center', paddingLeft: 10
     },
     typeText: {
         fontSize: 14, color: colors.primary
@@ -78,6 +97,11 @@ const styles = StyleSheet.create({
     nameText: {
         fontSize: 16, fontWeight: 'bold'
     },
+    postedDate: {
+        paddingTop: 0,
+        margin: 0,
+        color: 'grey'
+    }
 
 });
 

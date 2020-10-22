@@ -16,7 +16,7 @@ const MarketCard = (props) => {
                     <View style={styles.textContainer}>
                         <Text style={styles.text}>{props.name}</Text>
                         <View style={{ flexDirection: 'row', paddingTop: 2}}>
-                        <Icon name="phone-call" size={12} style={{ color: colors.primary, paddingRight: 5}}></Icon>
+                        <Icon name="phone-call" size={12} style={{ color: 'white', paddingRight: 5}}></Icon>
                         <Text style={styles.text}>+91-{props.contactNo}</Text>
                         </View>
                     </View>
@@ -28,9 +28,8 @@ const MarketCard = (props) => {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        height: 200,
+        height: 190,
         width: width - 50,
-        marginLeft: 10,
         marginLeft: 10,
         borderWidth: 0.5,
         borderColor: "#dddddd",
