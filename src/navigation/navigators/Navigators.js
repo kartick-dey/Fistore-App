@@ -26,12 +26,17 @@ const HomeStackScreens = (props) => {
         <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
-                headerShown: false
+                headerTitle: false,
+                headerBackTitleVisible: false,
+                headerTransparent: true,
+                headerTintColor: '#fff'
             }}
         >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Products" component={ProductScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} options={{
+                headerShown: false
+            }} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
+            <Stack.Screen name="Products" component={ProductScreen} />
         </Stack.Navigator>
     );
 };

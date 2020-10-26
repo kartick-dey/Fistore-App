@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TextInput, StyleSheet, TouchableOpacity, Dimensions, Image, ActivityIndicator, Alert } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Picker } from '@react-native-community/picker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../components/header';
 import colors from '../../constants/colors';
 
 import * as productActions from '../../store/actions/product';
+import Images from '../../constants/images';
 
 const AddPost = (props) => {
-  const productData = new FormData();
+  const {name, userId} = useSelector(state => state.auth)
+  console.log("userId from AddPost: ", userId);
   const dispatch = useDispatch();
 
+  const [isUploading, setIsUploading] = useState(false);
   const [fishName, setFishName] = useState('');
+  const [fisheryName, setFisheryName] = useState('');
   const [fishCategory, setFishCategory] = useState('');
   const [price, setPrice] = useState('');
   const [unit, setUnit] = useState('');
-  const [location, setLocation] = useState('');
+  const [availableTill, setAvailableTill] = useState('');
+  const [locality, setLocality] = useState('');
+  const [district, setDistrict] = useState('');
+  const [state, setState] = useState('');
   const [contact, setContact] = useState('');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState({
-    uri: '',
-    type: '',
-    fileName: '',
-    fileSize: 0
+    uri: null,
+    type: null,
+    fileName: null,
+    fileSize: null,
+    path: null
   });
-
-
 
   const openDrawer = () => {
     props.navigation.openDrawer();
@@ -36,73 +43,107 @@ const AddPost = (props) => {
 
   // Image Handling function
   const handleSelectPhoto = () => {
-    const options = {};
+    const options = {
+      quality: 0.5
+    };
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log(response.uri, response.type, response.fileName);
-      setImage({
+      // console.log("Image response: ", response);
+      console.log("response.uri: ", response.uri);
+      console.log("response.filename: ", response.fileName);
+      console.log("response.type: ", response.type);
+      console.log("response.path: ", response.path);
+      // console.log(response.uri, response.type, response.fileName, response.path);
+      const img = {
         uri: response.uri,
         type: response.type,
         fileName: response.fileName,
-        fileSize: response.fileSize
-      })
+        fileSize: response.fileSize,
+        path: response.path
+      };
+      setImage(img);
       console.log("Image from input: ", image);
-      productData.append('image', image);
 
 
     });
   };
 
   const onSubmit = () => {
-    productData.append('fishName', fishName);
-    productData.append('fishCategory', fishCategory.toUpperCase());
-    productData.append('price', +price);
-    productData.append('unit', unit.toUpperCase());
-    productData.append('location', location);
-    productData.append('contact', +contact);
+    setIsUploading(true);
+    const productData = {
+      userId: userId,
+      username: name,
+      fisheryName: fisheryName,
+      fishName: fishName,
+      fishCategory: fishCategory.toUpperCase(),
+      price: +price,
+      unit: unit.toUpperCase(),
+      availableTill: availableTill,
+      location: locality + ', ' + district + ', ' + state,
+      contact: +contact,
+      description: description,
+      image: image,
+    }
+
 
     try {
       dispatch(productActions.createProduct(productData, (error, result) => {
         if (error) {
           console.log("Error in Add Post: ", error);
+          Alert.alert("Status", error);
+          setIsUploading(false);
           return;
         }
         console.log("Result in Add Post: ", result);
-        alert("Successfully Saved")
+        Alert.alert("Status","Successfully Saved");
+        setIsUploading(false);
       }));
-      
+
     } catch (error) {
-      console.log("Error while submit the form in backend")
+      console.log("Error while submit the form in backend");
+      Alert.alert("Status",'Please check your data connection!');
+      setIsUploading(false);
     }
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, zIndex: 1 }}>
       <Header onOpenDrawer={openDrawer}></Header>
-      <ScrollView>
+      <ScrollView style={{ flex: 1}}>
         <View style={styles.form}>
-          <View style={styles.formControl}>
-            <Text style={styles.label}>Fish Name</Text>
-            <TextInput style={styles.input} value={fishName} onChangeText={text => setFishName(text)} />
+        <View style={styles.formControl}>
+            <Text style={styles.label}>Fishery Center</Text>
+            <TextInput placeholder="Ex. Somenath Fishry" style={styles.input} value={fisheryName} 
+            onChangeText={text => setFisheryName(text)} />
+        {/* android:windowSoftInputMode="adjustPan | adjustResize" */}
           </View>
           <View style={styles.formControl}>
-            <Text style={styles.label}>Fish Category</Text>
+            <Text style={styles.label}>Name of Fish</Text>
+            <TextInput placeholder="Ex. Katla" style={styles.input} value={fishName} 
+            onChangeText={text => setFishName(text)} />
+          </View>
+          <View style={styles.formControl}>
+            <Text style={styles.label}>Category</Text>
             <Picker style={styles.itemPicker}
+              selectedValue={fishCategory}
               onValueChange={(item, itemIndex) => setFishCategory(item)}>
               <Picker.Item label="Select Category" value="" />
               <Picker.Item label="Fish Spawn" value="Spawn" />
               <Picker.Item label="Fish Seed" value="Seed" />
               <Picker.Item label="Fish" value="Fish" />
+              <Picker.Item label="Sea Fish" value="Sea Fish" />
               <Picker.Item label="Aqurium Fish" value="Aqurium" />
             </Picker>
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Price</Text>
-            <TextInput style={styles.input} value={price} onChangeText={text => setPrice(text)}/>
+            <TextInput placeholder="Ex. 300" keyboardType='decimal-pad' style={styles.input} value={price} 
+            onChangeText={text => setPrice(text)} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Unit</Text>
             <Picker style={styles.itemPicker}
-            onValueChange={(item, itemIndex) => setUnit(item)}>
+              selectedValue={unit}
+              onValueChange={(item, itemIndex) => setUnit(item)}>
               <Picker.Item label="Select a unit" value="" />
               <Picker.Item label="Packet" value="Packet" />
               <Picker.Item label="Piece" value="Piece" />
@@ -111,25 +152,54 @@ const AddPost = (props) => {
             </Picker>
           </View>
           <View style={styles.formControl}>
-            <Text style={styles.label}>Location</Text>
-            <TextInput style={styles.input} value={location} onChangeText={text => setLocation(text)}/>
+            <Text style={styles.label}>Availability till</Text>
+            <TextInput placeholder="DD/MM/YYYY" style={styles.input} value={availableTill} 
+            onChangeText={(text) => {setAvailableTill(text)}} />
+          </View>
+          <View style={styles.formControl}>
+            <Text style={styles.label}>Locality</Text>
+            <TextInput placeholder="Ex. Ramsagar" style={styles.input} value={locality} 
+            onChangeText={(text) => {setLocality(text)}} />
+          </View>
+          <View style={styles.formControl}>
+            <Text style={styles.label}>District</Text>
+            <TextInput placeholder="Ex. Bankura" style={styles.input} value={district} 
+            onChangeText={(text) => {setDistrict(text)}} />
+          </View>
+          <View style={styles.formControl}>
+            <Text style={styles.label}>State</Text>
+            <TextInput placeholder="Ex. West Bangal" style={styles.input} value={state} 
+            onChangeText={(text) => {setState(text)}} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Contact No.</Text>
-            <TextInput style={styles.input} value={contact} onChangeText={text => setContact(text)}/>
+            <TextInput placeholder="+91-" style={styles.input} keyboardType='phone-pad' value={contact} 
+            onChangeText={text => setContact(text)} />
+          </View>
+          <View style={styles.formControl}>
+            <Text style={styles.label}>Description</Text>
+            <TextInput style={styles.input} multiline = {true} numberOfLines = {4} value={description} onChangeText={(text) => { setDescription(text)}} />
           </View>
           <View style={styles.formControl}>
             <View style={styles.uploadContainer}>
+              {image.uri ? (<View style={styles.imageContainer}>
+                {/* <Image source={Images.aqurium_1} style={styles.image}></Image> */}
+                <Image source={{ uri: image.uri }} style={styles.image}></Image>
+              </View>) : null}
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
               <TouchableOpacity style={styles.uploadButton} onPress={handleSelectPhoto}>
                 <FontAwesome name="photo" />
-                <Text style={styles.uploadButtonTitle}>Upload a Image</Text>
+                {image.uri ? <Text style={styles.uploadButtonTitle}>Change Image</Text> :
+                  <Text style={styles.uploadButtonTitle}>Upload a Image</Text>}
               </TouchableOpacity>
+              {image.fileName ? <Text style={{ paddingLeft: 5}}>{image.fileName}</Text> : null}
+              </View>
             </View>
           </View>
           <View style={styles.buttonConatiner}>
             <LinearGradient style={{ width: '50%' }} colors={[colors.primary, colors.liner]}>
-              <TouchableOpacity style={styles.button} onPress={onSubmit}>
-                <Text style={styles.buttonTitle}>Create Post</Text>
+              <TouchableOpacity style={styles.button} onPress={onSubmit} disabled={isUploading}>
+                { isUploading ? <ActivityIndicator size="small" color="white"  /> : <Text style={styles.buttonTitle}>Create Post</Text>}
               </TouchableOpacity>
             </LinearGradient>
           </View>
@@ -139,11 +209,13 @@ const AddPost = (props) => {
   );
 }
 
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   form: {
     flex: 1,
-    margin: 20
+    margin: 20,
+    marginTop: 10
   },
   formControl: {
     width: '100%'
@@ -159,6 +231,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   itemPicker: {
+    backgroundColor: '#dddddd',
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderBottomColor: '#ccc',
@@ -169,7 +242,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   uploadButton: {
-    width: '50%',
+    width: '40%',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
@@ -180,6 +253,18 @@ const styles = StyleSheet.create({
   uploadButtonTitle: {
     fontWeight: '700',
     paddingHorizontal: 10
+  },
+  imageContainer: {
+    width: width - 40,
+    height: 190,
+    marginBottom: 10
+  },
+  image: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'contain',
+    borderRadius: 5
   },
   buttonConatiner: {
     marginVertical: 20,

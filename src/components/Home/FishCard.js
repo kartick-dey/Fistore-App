@@ -9,7 +9,7 @@ import { IMG_ENDPOINT } from '../../../apiEndpoint';
 const { height, width } = Dimensions.get('window');
 
 const FishCard = (props) => {
-    const imageUrl = `${IMG_ENDPOINT}` + props.image;
+    // const imageUrl = `${IMG_ENDPOINT}` + props.image;
     const unit = props.unit.toLowerCase();
     // console.log("PostedAt: ", typeof(new Date().getDay() - new Date(props.postedAt).getDay()));
     let postedAt;
@@ -22,14 +22,14 @@ const FishCard = (props) => {
     return (
         <View style={styles.fisCard}>
             <View style={{ flex: 3 }}>
-                <Image style={styles.image} source={{ uri: imageUrl }}></Image>
-                <View style={styles.saveButton}>
-                    <View style={{ backgroundColor: 'white', padding: 5, justifyContent: 'center', alignItems: 'center'}}>
-                    <FontAwesome name="bookmark-o" size={20} color={colors.primary} />
-                    {/* <FontAwesome name="bookmark" size={20} color={colors.primary} /> */}
-                    <Text style={{ fontSize: 10, color: colors.primary, fontWeight: '700'}}>Save</Text>
+                <Image style={styles.image} source={{ uri: props.image }}></Image>
+                {props.saveBtn ? <View style={styles.saveButton}>
+                    <View style={{ backgroundColor: 'white', padding: 5, justifyContent: 'center', alignItems: 'center' }}>
+                        <FontAwesome name="bookmark-o" size={20} color={colors.primary} />
+                        {/* <FontAwesome name="bookmark" size={20} color={colors.primary} /> */}
+                        <Text style={{ fontSize: 10, color: colors.primary, fontWeight: '700' }}>Save</Text>
                     </View>
-                </View>
+                </View> : null}
             </View>
             <View style={styles.textContainer}>
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -38,7 +38,7 @@ const FishCard = (props) => {
                         <Text style={styles.nameText}>{props.fishName}</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'space-evenly', paddingRight: 5 }}>
-                        <Icon name="compass-outline" size={10} style={{ paddingVertical: 4 }}>
+                        <Icon name="location-outline" size={10} style={{ paddingVertical: 4 }}>
                             <Text style={{ fontSize: 10, marginLeft: 5 }}>{props.location}</Text>
                         </Icon>
                         <FontAwesome name="inr" size={13} color={colors.primary}>

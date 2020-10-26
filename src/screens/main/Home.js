@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, FlatList, Dimensions } from 'react-native';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet, RefreshControl, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import Swiper from 'react-native-swiper';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Header from '../../components/header';
 import CategoryCard from '../../components/Home/CategoryCard';
 import FishCard from '../../components/Home/FishCard';
 import MarketCard from '../../components/Home/MarketCard';
-import colors from '../../constants/colors';
 import images from '../../constants/images';
 import * as productActions from '../../store/actions/product';
-
-const { height, width } = Dimensions.get('window');
+import colors from '../../constants/colors';
 
 const Home = (props) => {
 
     const products = useSelector(state => state.products.products);
+    products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const [refreshing, setRefreshing] = React.useState(false);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const fetchAllProduct = async () => {
             dispatch(productActions.getAllProducts((error, result) => {
                 if (error) {
@@ -31,38 +33,52 @@ const Home = (props) => {
         fetchAllProduct();
     }, [dispatch]);
 
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        const fetchAllProduct = async () => {
+            dispatch(productActions.getAllProducts((error, result) => {
+                if (error) {
+                    console.log("Error from Home : ", error);
+                    setRefreshing(false)
+                    return;
+                }
+                console.log("Result from Home: ", result);
+                setRefreshing(false)
+            }))
+        };
+        fetchAllProduct();
+    }, [dispatch]);
+
+
     const openDrawer = () => {
         props.navigation.openDrawer();
     }
-    const renderFishCard = ({ item }) => (
-        <FishCard 
-        image={item.image} 
-        fishType={item.fishType} 
-        fishName={item.fishName}
-        location={item.location}
-        price={item.price}
-        unit={item.unit} 
-        postedAt = {item.createdAt}
-        rating={3.5} />
-    );
+    const fishCards = products.map(product => (
+        <TouchableOpacity key={product.id} onPress={() => props.navigation.navigate('ProductDetails', product)}>
+            <FishCard image={product.image}
+            fishType={product.fishCategory}
+            fishName={product.fishName}
+            location={product.location}
+            price={product.price}
+            unit={product.unit}
+            postedAt={product.createdAt}
+            rating={3.5}
+            saveBtn={false} />
+        </TouchableOpacity>
+    ));
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Header onOpenDrawer={openDrawer}></Header>
-            <ScrollView scrollEventThrottle={16}>
+            <ScrollView scrollEventThrottle={16}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
                 <View style={styles.bodyContainer}>
-                    <Text style={styles.heading}>Explore By Category?</Text>
-                    <View style={styles.categoryContainer}>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                            <CategoryCard name="Fish Spawn" image={images.fish_spawn} />
-                            <CategoryCard name="Fish Seed" image={images.fish_seed} />
-                            <CategoryCard name="Fish" image={images.fish} />
-                            <CategoryCard name="Aqurium Fish" image={images.aqurium_fish} />
-                        </ScrollView>
-                    </View>
                     <Text style={styles.heading}>Introducing Fistore Marketplace</Text>
                     <Text style={styles.caption}>A collection of verified, best quality and low cost Fish Market and Aqurium Center</Text>
                     <View style={styles.marketContainer}>
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <Swiper activeDotColor='red' dotColor={colors.hover} autoplay={true} autoplayDirection={true} autoplayTimeout={2}>
                             <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_1} />
                             <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_1} />
                             <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_2} />
@@ -70,17 +86,70 @@ const Home = (props) => {
                             <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_3} />
                             <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_3} />
                             <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_4} />
-                        </ScrollView>
+                        </Swiper>
+                        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_1} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_1} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_2} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_2} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_3} />
+                            <MarketCard name="World Famous Aqurium Center" contactNo="8170990726" image={images.aqurium_3} />
+                            <MarketCard name="World Famous Fish Center" contactNo="8170990726" image={images.market_4} />
+                        </ScrollView> */}
+                    </View>
+                    <Text style={styles.heading}>Explore Categories</Text>
+                    <View style={styles.categoryContainer}>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <Image source={images.seed_fish} style={styles.categoryImg}></Image>
+                            </View>
+                            <Text style={styles.categroryBtnText}>Spawn Fish</Text>
+
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <Image source={images.fish_seed} style={styles.categoryImg}></Image>
+                            </View>
+                            <Text style={styles.categroryBtnText}>Seed Fish</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <Image source={images.aqurium_fish} style={styles.categoryImg}></Image>
+                            </View>
+                            <Text style={styles.categroryBtnText}>Aqurium Fish</Text>
+                        </TouchableOpacity>
+                        {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                            <CategoryCard name="Fish Spawn" image={images.fish_spawn} />
+                            <CategoryCard name="Fish Seed" image={images.fish_seed} />
+                            <CategoryCard name="Fish" image={images.fish} />
+                            <CategoryCard name="Aqurium Fish" image={images.aqurium_fish} />
+                        </ScrollView> */}
+                    </View>
+                    <View style={[styles.categoryContainer, , { marginTop: 10 }]}>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <Image source={images.fish} style={styles.categoryImg}></Image>
+                            </View>
+                            <Text style={styles.categroryBtnText}>Fish</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <Image source={images.sea_fish} style={styles.categoryImg}></Image>
+                            </View>
+                            <Text style={styles.categroryBtnText}>Sea Fish</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.categoryBtn}>
+                            <View style={styles.categoryIcon}>
+                                <FontAwesome name="angle-down" size={35} color="#fff" />
+                            </View>
+                            <Text style={styles.categroryBtnText}>More..</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ backgroundColor: 'white' }}>
-                    <Text style={styles.heading}>Fishes Around the World</Text>
+                <View style={{ backgroundColor: 'white', paddingBottom: 20, marginTop: 10 }}>
+                    <Text style={[styles.heading, { marginBottom: 10}]}>Top Rated Collections</Text>
                     <View style={styles.fishContainer}>
-                        <FlatList 
-                        data={products}
-                        horizontal={true}
-                        keyExtractor={(item) => item.userId}
-                        renderItem={renderFishCard} />
+                        {fishCards}
                     </View>
                 </View>
             </ScrollView>
@@ -99,18 +168,61 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: '700',
         paddingHorizontal: 13,
-        // letterSpacing: 1
+        letterSpacing: 1,
+        color: colors.textColor,
+        alignSelf: 'center',
+        fontFamily: 'sans-serif'
     },
     caption: {
         fontSize: 15,
         marginTop: 5,
-        paddingHorizontal: 13
+        paddingHorizontal: 13,
+        color: 'grey',
+        textAlign: 'center'
     },
     categoryContainer: {
-        height: 130,
-        marginTop: 10,
-        marginBottom: 15,
-        marginRight: 10,
+        // height: 130,
+        // marginTop: 10,
+        // marginBottom: 15,
+        // marginRight: 10,
+        // -------------------
+        flexDirection: 'row',
+        width: '90%',
+        alignSelf: 'center',
+        marginTop: 25,
+        marginBottom: 10,
+    },
+    categoryBtn: {
+        flex: 1,
+        width: '30%',
+        marginHorizontal: 0,
+        alignSelf: 'center'
+    },
+    categoryIcon: {
+        borderWidth: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: colors.hover,
+        borderRadius: 50,
+        padding: 5
+    },
+    categoryImg: {
+        flex: 1,
+        alignSelf: 'center',
+        width: '100%',
+        height: null,
+        resizeMode: 'cover',
+        borderRadius: 50
+    },
+    categroryBtnText: {
+        alignSelf: 'center',
+        marginTop: 5,
+        color: colors.primary,
+        fontWeight: '700',
+        fontFamily: 'Roboto'
     },
     marketContainer: {
         height: 200,
@@ -121,7 +233,7 @@ const styles = StyleSheet.create({
     fishContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
+        // justifyContent: 'space-evenly',
         marginBottom: 10,
         marginLeft: 2
     }

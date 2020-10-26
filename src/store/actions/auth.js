@@ -54,7 +54,7 @@ export const login = (provider, token, callback) => {
         })
             .then(response => response.json())
             .then(jsonData => {
-                console.log('ResData: ', jsonData);
+                // console.log('ResData: ', jsonData);
                 getUserInfo(jsonData.jwtToken, (error, result) => {
                     if (error) {
                         console.log("Error while fetching user data: ", error);

@@ -25,7 +25,7 @@ const Header = (props) => {
 const styles = StyleSheet.create({
     headerContainer: {
         height: '6.5%',
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#fff',
         // justifyContent: 'space-evenly',
         alignItems: 'flex-start',
         borderBottomColor: '#dddddd',

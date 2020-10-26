@@ -1,19 +1,29 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { Platform } from 'react-native';
 
-import {API_URL} from '../../../apiEndpoint';
+import { API_URL } from '../../../apiEndpoint';
+import Product from '../../models/product.model';
 
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 
-const getUserDetails = async () => {
+const getUserDetails = async (callback) => {
     const userData = await AsyncStorage.getItem('userData');
     const transformedUserData = JSON.parse(userData);
-    const { jwtToken, userId} = transformedUserData;
-    return { jwtToken, userId };
+    const { jwtToken, userId } = transformedUserData;
+    return callback(jwtToken, userId);
 };
 
 export const getAllProducts = (callback) => {
-    const { jwtToken, userId } = getUserDetails();
+    let jwtToken;
+    let userId;
+    getUserDetails((token, uid) => {
+        console.log("token: ", token);
+        console.log("uid: ", uid);
+        jwtToken = token;
+        userId = uid;
+
+    })
 
     return dispatch => {
         fetch(`${API_URL}/product`, {
@@ -24,11 +34,31 @@ export const getAllProducts = (callback) => {
         })
             .then(response => response.json())
             .then(jsonData => {
-                console.log('FETCHED: ', jsonData);
+                // console.log('FETCHED: ', jsonData);
+                let loadedProducts = [];
+                jsonData.map(data => {
+                    const product = new Product(
+                        data._id,
+                        data.userId,
+                        data.username,
+                        data.fisheryName,
+                        data.fishName,
+                        data.fishCategory,
+                        data.price,
+                        data.unit,
+                        data.image,
+                        data.location,
+                        data.contact,
+                        data.availableTill,
+                        data.description,
+                        data.createdAt,
+                        data.updatedAt);
+                    loadedProducts.push(product);
+                })
                 dispatch({
                     type: GET_PRODUCTS,
-                    products: jsonData,
-                    userId: userId
+                    products: loadedProducts,
+                    currentUserId: userId
                 });
                 return callback(null, 'FETCHED');
             })
@@ -40,19 +70,32 @@ export const getAllProducts = (callback) => {
 }
 
 export const createProduct = (productData, callback) => {
-    const { jwtToken, userId } = getUserDetails();
-    productData.append('userId', userId);
-
+    let payload = new FormData();
+    console.log("Product Data: ", productData);
+    Object.keys(productData).forEach((key) => {
+        payload.append(key, productData[key]);
+    });
+    payload.append('image', { uri: Platform.OS === 'android' ? productData.image.uri : photo.uri.replace('file://', ''), type: productData.image.type, name: productData.image.fileName });
+    // payload.append('Content-Type', productData.image.type)
+    console.log('payload', payload);
+    let jwtToken;
+    let userId;
+    getUserDetails(userInfo => {
+        const { token, uid } = userInfo;
+        jwtToken = token;
+        userId = uid;
+    });
     return dispatch => {
         fetch(`${API_URL}/product`, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${jwtToken}`,
-                'Content-Type': 'multipart/form-data'
-            },
-            body: productData
+            body: payload
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Something went wrong");
+                }
+                return response.json();
+            })
             .then(jsonData => {
                 dispatch({
                     type: CREATE_PRODUCT,
@@ -65,5 +108,6 @@ export const createProduct = (productData, callback) => {
                 return callback(error);
             })
     }
-} 
+
+}
 

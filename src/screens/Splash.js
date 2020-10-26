@@ -12,31 +12,22 @@ const Splash = (props) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      console.log('1');
       const userData = await AsyncStorage.getItem('userData');
-      console.log("2");
-      console.log("Useradata fromAsync: ", userData);
-      console.log("3");
+      // console.log("Useradata fromAsync: ", userData);
       if (!userData) {
-        console.log("4");
         props.navigation.navigate('Auth');
         return;
       }
-      console.log("5");
       const transforUserData = JSON.parse(userData);
       const {jwtToken, userId, expiryDate} = transforUserData;
       const expirationDate = new Date(expiryDate);
-      console.log("6");
       // if (expirationDate <= new Date() || !jwtToken || !userId)
       if ( !jwtToken || !userId ) {
-        console.log("7");
         props.navigation.navigate('Auth');
         return;
       }
       props.navigation.navigate('Main');
-      console.log("8");
       dispatch(authActions.authenticate(transforUserData));
-      console.log("10 ");     
       // setTimeout(() => {
       //     this.props.navigation.navigate('Auth');
       // }, 2000);

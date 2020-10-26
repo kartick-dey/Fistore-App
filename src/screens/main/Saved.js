@@ -1,25 +1,26 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Header from '../../components/header';
 
 
-export default class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+const Saved = (props) => {
+  // const savedProducts = useSelector(state => state.propucts.userProducts);
+  const openDrawer = () => {
+    props.navigation.openDrawer();
   }
 
-  openDrawer = () => {
-    this.props.navigation.openDrawer();
-}
+  return (
+    <View style={{ flex: 1 }}>
+      <Header onOpenDrawer={openDrawer}></Header>
+      <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Saved Screen </Text>
+      {/* <FlatList
+        keyExtractor={(item) => item._id}
+        data={savedProducts}
+        renderItem={(item) => <Text>{item.fishName}</Text>} /> */}
+    </View>
+  );
+};
 
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <Header onOpenDrawer={this.openDrawer}></Header>
-                <Text style={{ fontWeight: 'bold', textAlign: 'center' }}> Saved Screen </Text>
-      </View>
-    );
-  }
-}
+export default Saved;

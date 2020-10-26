@@ -29,7 +29,7 @@ const MarketCard = (props) => {
 const styles = StyleSheet.create({
     cardContainer: {
         height: 190,
-        width: width - 50,
+        width: width - 21,
         marginLeft: 10,
         borderWidth: 0.5,
         borderColor: "#dddddd",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     conatiner: {
-        width: width - 50,
+        width: width - 20,
         position: 'absolute',
         top: 0,
         left: 0,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
     },
     textContainer: {
-        width: width - 48,
+        width: width - 17,
         paddingHorizontal: 10,
         backgroundColor: 'rgba(52, 52, 52, 0.9)',
         borderBottomRightRadius: 10,
