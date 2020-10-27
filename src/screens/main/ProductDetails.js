@@ -17,11 +17,11 @@ const { width } = Dimensions.get('window');
 const ProductDetails = (props) => {
   const selectedProduct = props.route.params;
   let postedAt;
-    if ((new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) === 0) {
-        postedAt = 'Today'
-    } else {
-        postedAt = +(new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) + ' day ago';
-    }
+  if ((new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) === 0) {
+    postedAt = 'Today'
+  } else {
+    postedAt = +(new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) + ' day ago';
+  }
   const allProducts = useSelector(state => state.products.products);
   const relatedProducts = allProducts.filter(product => product.fishCategory === selectedProduct.fishCategory);
   const fishCards = relatedProducts.map(product => (
@@ -47,9 +47,9 @@ const ProductDetails = (props) => {
         minOverlayOpacity={0.3}
         renderHeader={() =>
           (<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={{ uri: selectedProduct.image}} style={styles.image} />
+            <Image source={{ uri: selectedProduct.image }} style={styles.image} />
             <View style={{ position: 'absolute' }}>
-              <Text style={styles.imageText}>Maa Kali Fish Center</Text>
+              <Text style={styles.imageText}>{selectedProduct.fisheryName}</Text>
             </View>
           </View>)
         }
@@ -59,10 +59,10 @@ const ProductDetails = (props) => {
         >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View>
-      <Text style={styles.title}>{selectedProduct.fishName}</Text>
+              <Text style={styles.title}>{selectedProduct.fishName}</Text>
               <View style={{ flexDirection: 'row' }}>
                 <Text>Posted:</Text>
-      <Text style={{ paddingHorizontal: 5 }}>{postedAt}</Text>
+                <Text style={{ paddingHorizontal: 5 }}>{postedAt}</Text>
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', alignSelf: 'center' }}>
@@ -76,28 +76,28 @@ const ProductDetails = (props) => {
           <View style={styles.detailsSection}>
             <View style={styles.details}>
               <Text>Category:</Text>
-      <Text>{selectedProduct.fishCategory}</Text>
+              <Text>{selectedProduct.fishCategory}</Text>
             </View>
             <View style={styles.details}>
               <Text>Provider: </Text>
-              <Text>kartick Dey</Text>
+              <Text>{selectedProduct.username}</Text>
             </View>
             <View style={styles.details}>
               <Text>Location:</Text>
               <Text>{selectedProduct.location}</Text>
             </View>
             <View style={styles.details}>
-              <Text>Availability:</Text>
-              <Text>10/11/2020</Text>
+              <Text>Available From:</Text>
+              <Text>{new Date(selectedProduct.createdAt).toDateString()}</Text>
             </View>
           </View>
           <View style={styles.priceContainer}>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <FontAwesome name='inr' size={18} color={colors.primary} />
               <View style={{ flexDirection: 'row', paddingHorizontal: 5 }}>
-      <Text style={{ fontSize: 25 }}>{selectedProduct.price}</Text>
+                <Text style={{ fontSize: 25 }}>{selectedProduct.price}</Text>
                 <Text style={{ fontSize: 25 }}>/</Text>
-      <Text style={{ fontSize: 25 }}>{selectedProduct.unit}</Text>
+                <Text style={{ fontSize: 25 }}>{selectedProduct.unit}</Text>
               </View>
             </View>
           </View>
@@ -115,15 +115,11 @@ const ProductDetails = (props) => {
           </View>
           <View style={styles.descriptionContainer}>
             <Text style={styles.sectionTitle}>Decription:</Text>
-            <Text style={styles.sectionContent}>Fish farming or pisciculture involves raising fish commercially in tanks or e
-            nclosures such as fish ponds,
-            usually for food. ... A facility that releases juvenile fish into the wild
-            for recreational fishing or to supplement a species' natural numbers is generally
-             referred to as a fish hatchery.</Text>
+            <Text style={styles.sectionContent}>{selectedProduct.description}</Text>
           </View>
         </View>
         <View style={styles.relatedProducts}>
-        <Text style={[styles.sectionTitle, { alignSelf: 'center', paddingBottom: 20}]}>Related Fish Collections</Text>
+          <Text style={[styles.sectionTitle, { alignSelf: 'center', paddingBottom: 20 }]}>Related Fish Collections</Text>
           <View style={styles.fishContainer}>
             {fishCards}
           </View>
@@ -145,13 +141,14 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     resizeMode: 'cover'
   },
-  imageText: { 
-    fontSize: 30, 
-    color: colors.textColor, 
-    backgroundColor: '#ddd', 
-    paddingVertical: 5, 
-    paddingHorizontal: 20, 
-    borderRadius: 50 
+  imageText: {
+    fontSize: 30,
+    color: colors.textColor,
+    backgroundColor: '#ddd',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 50,
+    textTransform: "capitalize"
   },
   title: {
     fontSize: 20,

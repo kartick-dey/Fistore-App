@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 import Header from '../../components/header';
@@ -17,10 +17,8 @@ export default class Search extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Header onOpenDrawer={this.openDrawer}></Header>
-        {/* <KeyboardAvoidingView>
-          <ScrollView style={{ display: 'flex'}}>  */}
             <View style={styles.searchBox}>
               <Icon style={styles.searchIcon} name="search-circle" size={30} color="grey"></Icon>
               <TextInput
@@ -30,8 +28,6 @@ export default class Search extends Component {
                 <Text style={{ color: colors.primary, fontWeight: '700' }}>Search</Text>
               </TouchableOpacity>
             </View>
-          {/* </ScrollView>
-        </KeyboardAvoidingView> */}
       </View>
     );
   }

@@ -4,7 +4,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Picker } from '@react-native-community/picker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-picker';
+// import DatePicker from 'react-native-datepicker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch, useSelector } from 'react-redux';
+
 
 import Header from '../../components/header';
 import colors from '../../constants/colors';
@@ -13,7 +16,10 @@ import * as productActions from '../../store/actions/product';
 import Images from '../../constants/images';
 
 const AddPost = (props) => {
-  const {name, userId} = useSelector(state => state.auth)
+  const dummyDesc = `Fish farming or pisciculture involves raising fish commercially in tanks or enclosures 
+  such as fish ponds, usually for food. A facility that releases juvenile fish into the wild for recreational
+  fishing or to supplement a species natural numbers is generally referred to as a fish hatchery.`;
+  const { name, userId } = useSelector(state => state.auth)
   console.log("userId from AddPost: ", userId);
   const dispatch = useDispatch();
 
@@ -23,7 +29,8 @@ const AddPost = (props) => {
   const [fishCategory, setFishCategory] = useState('');
   const [price, setPrice] = useState('');
   const [unit, setUnit] = useState('');
-  const [availableTill, setAvailableTill] = useState('');
+  const [availableTill, setAvailableTill] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [locality, setLocality] = useState('');
   const [district, setDistrict] = useState('');
   const [state, setState] = useState('');
@@ -67,6 +74,15 @@ const AddPost = (props) => {
     });
   };
 
+  const showDate = () => {
+    setShowDatePicker(true);
+  };
+  const onChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    const currentDate = selectedDate || availableTill;
+    setAvailableTill(currentDate);
+  };
+
   const onSubmit = () => {
     setIsUploading(true);
     const productData = {
@@ -77,10 +93,10 @@ const AddPost = (props) => {
       fishCategory: fishCategory.toUpperCase(),
       price: +price,
       unit: unit.toUpperCase(),
-      availableTill: availableTill,
+      // availableTill: new Date(availableTill).toISOString(),
       location: locality + ', ' + district + ', ' + state,
       contact: +contact,
-      description: description,
+      description: description || dummyDesc,
       image: image,
     }
 
@@ -94,13 +110,13 @@ const AddPost = (props) => {
           return;
         }
         console.log("Result in Add Post: ", result);
-        Alert.alert("Status","Successfully Saved");
+        Alert.alert("Status", "Successfully Saved");
         setIsUploading(false);
       }));
 
     } catch (error) {
       console.log("Error while submit the form in backend");
-      Alert.alert("Status",'Please check your data connection!');
+      Alert.alert("Status", 'Please check your data connection!');
       setIsUploading(false);
     }
   };
@@ -108,18 +124,18 @@ const AddPost = (props) => {
   return (
     <View style={{ flex: 1, zIndex: 1 }}>
       <Header onOpenDrawer={openDrawer}></Header>
-      <ScrollView style={{ flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.form}>
-        <View style={styles.formControl}>
+          <View style={styles.formControl}>
             <Text style={styles.label}>Fishery Center</Text>
-            <TextInput placeholder="Ex. Somenath Fishry" style={styles.input} value={fisheryName} 
-            onChangeText={text => setFisheryName(text)} />
-        {/* android:windowSoftInputMode="adjustPan | adjustResize" */}
+            <TextInput placeholder="Ex. Somenath Fishry" style={styles.input} value={fisheryName}
+              onChangeText={text => setFisheryName(text)} />
+            {/* android:windowSoftInputMode="adjustPan | adjustResize" */}
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Name of Fish</Text>
-            <TextInput placeholder="Ex. Katla" style={styles.input} value={fishName} 
-            onChangeText={text => setFishName(text)} />
+            <TextInput placeholder="Ex. Katla" style={styles.input} value={fishName}
+              onChangeText={text => setFishName(text)} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Category</Text>
@@ -136,8 +152,8 @@ const AddPost = (props) => {
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Price</Text>
-            <TextInput placeholder="Ex. 300" keyboardType='decimal-pad' style={styles.input} value={price} 
-            onChangeText={text => setPrice(text)} />
+            <TextInput placeholder="Ex. 300" keyboardType='decimal-pad' style={styles.input} value={price}
+              onChangeText={text => setPrice(text)} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Unit</Text>
@@ -153,32 +169,42 @@ const AddPost = (props) => {
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Availability till</Text>
-            <TextInput placeholder="DD/MM/YYYY" style={styles.input} value={availableTill} 
-            onChangeText={(text) => {setAvailableTill(text)}} />
+            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }} onPress={() => showDate()}>
+              <Text style={{ width: '70%' }}> 
+              { availableTill === new Date() ? 'Select a Date' : new Date(availableTill).toDateString() }</Text>
+              <FontAwesome name="calendar" size={20} />
+            </TouchableOpacity>
+            {showDatePicker && <DateTimePicker
+              testID="dateTimePicker"
+              value={availableTill}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />}
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Locality</Text>
-            <TextInput placeholder="Ex. Ramsagar" style={styles.input} value={locality} 
-            onChangeText={(text) => {setLocality(text)}} />
+            <TextInput placeholder="Ex. Ramsagar" style={styles.input} value={locality}
+              onChangeText={(text) => { setLocality(text) }} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>District</Text>
-            <TextInput placeholder="Ex. Bankura" style={styles.input} value={district} 
-            onChangeText={(text) => {setDistrict(text)}} />
+            <TextInput placeholder="Ex. Bankura" style={styles.input} value={district}
+              onChangeText={(text) => { setDistrict(text) }} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>State</Text>
-            <TextInput placeholder="Ex. West Bangal" style={styles.input} value={state} 
-            onChangeText={(text) => {setState(text)}} />
+            <TextInput placeholder="Ex. West Bangal" style={styles.input} value={state}
+              onChangeText={(text) => { setState(text) }} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Contact No.</Text>
-            <TextInput placeholder="+91-" style={styles.input} keyboardType='phone-pad' value={contact} 
-            onChangeText={text => setContact(text)} />
+            <TextInput placeholder="+91-" style={styles.input} keyboardType='phone-pad' value={contact}
+              onChangeText={text => setContact(text)} />
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Description</Text>
-            <TextInput style={styles.input} multiline = {true} numberOfLines = {4} value={description} onChangeText={(text) => { setDescription(text)}} />
+            <TextInput style={styles.input} multiline={true} numberOfLines={4} value={description} onChangeText={(text) => { setDescription(text) }} />
           </View>
           <View style={styles.formControl}>
             <View style={styles.uploadContainer}>
@@ -186,20 +212,22 @@ const AddPost = (props) => {
                 {/* <Image source={Images.aqurium_1} style={styles.image}></Image> */}
                 <Image source={{ uri: image.uri }} style={styles.image}></Image>
               </View>) : null}
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-              <TouchableOpacity style={styles.uploadButton} onPress={handleSelectPhoto}>
-                <FontAwesome name="photo" />
-                {image.uri ? <Text style={styles.uploadButtonTitle}>Change Image</Text> :
-                  <Text style={styles.uploadButtonTitle}>Upload a Image</Text>}
-              </TouchableOpacity>
-              {image.fileName ? <Text style={{ paddingLeft: 5}}>{image.fileName}</Text> : null}
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                <TouchableOpacity style={styles.uploadButton} onPress={handleSelectPhoto}>
+                  <FontAwesome name="photo" />
+                  {image.uri ? <Text style={styles.uploadButtonTitle}>Change Image</Text> :
+                    <Text style={styles.uploadButtonTitle}>Upload a Image</Text>}
+                </TouchableOpacity>
+                <View style={{flexWrap: 'wrap' }}>
+                {image.fileName ? <Text style={{ paddingLeft: 5,}}>{image.fileName}</Text> : null}
+                </View>
               </View>
             </View>
           </View>
           <View style={styles.buttonConatiner}>
             <LinearGradient style={{ width: '50%' }} colors={[colors.primary, colors.liner]}>
               <TouchableOpacity style={styles.button} onPress={onSubmit} disabled={isUploading}>
-                { isUploading ? <ActivityIndicator size="small" color="white"  /> : <Text style={styles.buttonTitle}>Create Post</Text>}
+                {isUploading ? <ActivityIndicator size="small" color="white" /> : <Text style={styles.buttonTitle}>Create Post</Text>}
               </TouchableOpacity>
             </LinearGradient>
           </View>

@@ -49,7 +49,7 @@ export const getAllProducts = (callback) => {
                         data.image,
                         data.location,
                         data.contact,
-                        data.availableTill,
+                        // data.availableTill,
                         data.description,
                         data.createdAt,
                         data.updatedAt);

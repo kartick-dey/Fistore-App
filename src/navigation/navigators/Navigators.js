@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import HomeScreen from '../../screens/main/Home';
-import ProductScreen from '../../screens/main/Products';
+import ProductOverview, {ProductOverviewScreenOption} from '../../screens/main/ProductOverview';
 import ProductDetailsScreen from '../../screens/main/ProductDetails';
 import AddPostScreen from '../../screens/main/AddPost';
 import SavedScreen from '../../screens/main/Saved';
@@ -23,41 +23,26 @@ const Tab = createBottomTabNavigator();
 
 const HomeStackScreens = (props) => {
     return (
-        <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
+        <Stack.Navigator initialRouteName="Home" >
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false}}/>
+            <Stack.Screen name="ProductOverview" component={ProductOverview}  options={ProductOverviewScreenOption} />
+            <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} options={{
                 headerTitle: false,
                 headerBackTitleVisible: false,
                 headerTransparent: true,
                 headerTintColor: '#fff'
-            }}
-        >
-            <Stack.Screen name="Home" component={HomeScreen} options={{
-                headerShown: false
-            }} />
-            <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
-            <Stack.Screen name="Products" component={ProductScreen} />
+            }}/>
         </Stack.Navigator>
     );
 };
 
+
 const MainTabScreens = (props) => {
     return (
         <Tab.Navigator initialRouteName="Home"
-            screenOptions={{
-                headerShown: false,
-            }}
             tabBarOptions={{
                 activeTintColor: colors.primary,
-                // inactiveTintColor: "#fff",
                 inactiveTintColor: "#838485",
-                // style: {
-                //     height: '6.5%',
-                //     backgroundColor: colors.hover,
-                //     position:'absolute',
-                //     bottom:0,
-                //     elevation:0
-                //     },
                 labelStyle: {
                     fontSize: 12,
                     margin: 0,
@@ -68,7 +53,7 @@ const MainTabScreens = (props) => {
                 },
                 safeAreaInsets: {
                     bottom: 5
-                }
+                },
             }}>
             <Tab.Screen name="Home" component={HomeStackScreens}
                 options={{

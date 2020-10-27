@@ -9,14 +9,14 @@ const Header = (props) => {
     return (
         <View style={styles.headerContainer}>
             <View style={styles.brandContainer}>
-            <TouchableOpacity onPress={props.onOpenDrawer}>
-                <Icon name="menu" size={width * 0.08} color={colors.primary}></Icon>
-            </TouchableOpacity>
-            <Text style={styles.brandName}> F<Text style={{ color: colors.primary }}>!</Text>
-                <Text style={{ fontSize: width * 0.04, fontWeight: 'bold' }}>STORE</Text> </Text>
+                <TouchableOpacity onPress={props.onOpenDrawer}>
+                    <Icon name="menu" size={width * 0.08} color={colors.primary}></Icon>
+                </TouchableOpacity>
+                <Text style={styles.brandName}> F<Text style={{ color: colors.primary }}>!</Text>
+                    <Text style={{ fontSize: width * 0.04, fontWeight: 'bold' }}>STORE</Text> </Text>
             </View>
             <View style={styles.profileContainer}>
-                <Icon name="person-circle-outline" size={width * 0.08} color="grey"/>
+                <Icon name="person-circle-outline" size={width * 0.08} color="grey" />
             </View>
         </View>
     );
@@ -24,7 +24,7 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: '6.5%',
+        height: 50,
         backgroundColor: '#fff',
         // justifyContent: 'space-evenly',
         alignItems: 'flex-start',
@@ -33,16 +33,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 9,
         flexDirection: 'row',
-        zIndex: 1
+        // zIndex: 1
     },
     brandContainer: {
         flexDirection: 'row',
         flex: 1
-    },
-    profileContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'flex-end'
     },
     brandName: {
         paddingTop: width * 0.004,
@@ -50,6 +45,11 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
         fontSize: width * 0.07,
         fontWeight: 'bold'
+    },
+    profileContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-end'
     }
 });
 

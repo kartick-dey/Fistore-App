@@ -11,6 +11,8 @@ const { height, width } = Dimensions.get('window');
 const FishCard = (props) => {
     // const imageUrl = `${IMG_ENDPOINT}` + props.image;
     const unit = props.unit.toLowerCase();
+    const location = props.location;
+    const listLocation = location.split(',');
     // console.log("PostedAt: ", typeof(new Date().getDay() - new Date(props.postedAt).getDay()));
     let postedAt;
     if ((new Date().getDay() - new Date(props.postedAt).getDay()) === 0) {
@@ -39,7 +41,7 @@ const FishCard = (props) => {
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'space-evenly', paddingRight: 5 }}>
                         <Icon name="location-outline" size={10} style={{ paddingVertical: 4 }}>
-                            <Text style={{ fontSize: 10, marginLeft: 5 }}>{props.location}</Text>
+                            <Text style={{ fontSize: 10, marginLeft: 5 }}>{listLocation[2]}</Text>
                         </Icon>
                         <FontAwesome name="inr" size={13} color={colors.primary}>
                             <Text style={{ fontWeight: 'bold', fontSize: 14 }}> {props.price}/{unit}</Text>
@@ -89,13 +91,20 @@ const styles = StyleSheet.create({
         display: "flex"
     },
     textContainer: {
-        flex: 2, justifyContent: 'center', paddingLeft: 10
+        flex: 2, 
+        justifyContent: 'center', 
+        paddingLeft: 10
     },
     typeText: {
-        fontSize: 14, color: colors.primary
+        fontSize: 14, 
+        color: 'grey',
+        textTransform: 'capitalize'
     },
     nameText: {
-        fontSize: 16, fontWeight: 'bold'
+        fontSize: 18, 
+        color: colors.primary,
+        fontWeight: 'bold',
+        textTransform: 'uppercase'
     },
     postedDate: {
         paddingTop: 0,
