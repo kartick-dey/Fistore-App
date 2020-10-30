@@ -8,21 +8,27 @@ import Images from '../../constants/images';
 
 const { width } = Dimensions.get('window');
 
-const ProductOverviewCard = () => {
+const ProductOverviewCard = (props) => {
     const [saved, setSaved] = useState(false);
+    let postedAt;
+    if ((new Date().getDay() - new Date(props.product.createdAt).getDay()) === 0) {
+        postedAt = 'Today'
+    } else {
+        postedAt = +(new Date().getDay() - new Date(props.product.createdAt).getDay()) + ' day ago';
+    }
     return (
         <View style={styles.container}>
             <View style={styles.brandContainer}>
                 <View style={styles.iconContainer}>
                     <View style={styles.icon}>
-                        <FontAwesome name="university" size={25} color={colors.primary} />
+                        <FontAwesome name="university" size={20} color={colors.primary} />
                     </View>
                 </View>
                 <View style={styles.fisheryNameContainer}>
-                    <Text style={styles.fisheryNameText}>Maa kali Fishery Center</Text>
+                    <Text style={styles.fisheryNameText}>{props.product.fisheryName}</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 5 }}>
-                        <FontAwesome name="globe" size={13} color="grey"/>
-                        <Text style={styles.fisheryLocationText}>Ramsagar, Bankura, West bangal</Text>
+                        <FontAwesome name="globe" size={12} color="grey" />
+                        <Text style={styles.fisheryLocationText}>{props.product.location}</Text>
                     </View>
                 </View>
                 <View style={styles.saveBtnContainer}>
@@ -32,28 +38,32 @@ const ProductOverviewCard = () => {
                 </View>
             </View>
             <View style={styles.productContainer}>
-                <View style={styles.imgContainer}>
-                    <Image source={Images.market_1} style={styles.image} />
-                </View>
+                <TouchableOpacity style={styles.imgContainer} onPress={props.onClick}>
+                    {/* <View style={styles.imgContainer}> */}
+                    <Image source={{ uri: props.product.image }} style={styles.image} />
+                    {/* </View> */}
+                </TouchableOpacity>
                 <View style={styles.detailsContainer}>
-                    <Text style={styles.fishNameText}>Ruhi</Text>
-                    <Text style={styles.postedText}>Posted: Today</Text>
-                    <FontAwesome name="inr" size={17} color={colors.primary} style={{ paddingVertical: 2 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 18 }}> 400/kg</Text>
-                    </FontAwesome>
-                    <View style={{ paddingVertical: 4 }}>
-                        <StarRating
-                            containerStyle={{ width: width / 4 }}
-                            emptyStarColor={colors.primary}
-                            fullStarColor={colors.primary}
-                            disabled={false}
-                            maxStars={5}
-                            starSize={15}
-                            rating={4} />
-                    </View>
+                    <TouchableOpacity onPress={props.onClick}>
+                        <Text style={styles.fishNameText}>{props.product.fishName}</Text>
+                        <Text style={styles.postedText}>Posted: {postedAt}</Text>
+                        <FontAwesome name="inr" size={17} color={colors.primary} style={{ paddingVertical: 2 }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}> {props.product.price}/{props.product.unit}</Text>
+                        </FontAwesome>
+                        <View style={{ paddingVertical: 4 }}>
+                            <StarRating
+                                containerStyle={{ width: width / 5 }}
+                                emptyStarColor={colors.primary}
+                                fullStarColor={colors.primary}
+                                disabled={false}
+                                maxStars={5}
+                                starSize={13}
+                                rating={4} />
+                        </View>
+                    </TouchableOpacity>
                     <View style={styles.contactContainer}>
                         <TouchableOpacity style={styles.contactBtn}>
-                        <Icon name="phone-call" size={12} color='#fff' style={{ alignSelf: 'center', paddingHorizontal: 5 }}></Icon>
+                            <Icon name="phone-call" size={12} color='#fff' style={{ alignSelf: 'center', paddingHorizontal: 5 }}></Icon>
                             <Text style={styles.btnText}>Contact Seller</Text>
                         </TouchableOpacity>
                     </View>
@@ -73,20 +83,20 @@ const styles = StyleSheet.create({
         elevation: 0.5,
     },
     brandContainer: {
-        padding: 2,
-        height: '23%',
+        padding: 5,
+        height: '26%',
         width: '100%',
         borderBottomColor: '#dddddd',
         borderBottomWidth: 0.5,
         flexDirection: 'row',
     },
     productContainer: {
-        height: '77%',
+        height: '74%',
         width: '100%',
         flexDirection: 'row',
         borderBottomColor: '#dddddd',
         // borderBottomWidth: 0.5,
-        padding: 3
+        padding: 5
     },
     iconContainer: {
         paddingTop: 2,
@@ -110,11 +120,11 @@ const styles = StyleSheet.create({
     fisheryNameText: {
         paddingHorizontal: 5,
         paddingTop: 2,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold'
     },
     fisheryLocationText: {
-        fontSize: 13,
+        fontSize: 12,
         paddingHorizontal: 5,
         color: 'grey'
     },
@@ -147,26 +157,29 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     postedText: {
-        paddingVertical: 2
+        paddingVertical: 2,
+        color: 'grey',
+        fontSize: 12
     },
     contactContainer: {
-        // height: '20%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 5
+        paddingVertical: 12
     },
     contactBtn: {
         alignSelf: 'flex-start',
-        backgroundColor: colors.primary,
+        backgroundColor: colors.liner,
         paddingVertical: 5,
         paddingHorizontal: 20,
         flexDirection: 'row',
+        borderRadius: 5
     },
     btnText: {
         textAlign: 'center',
         paddingBottom: 2,
-        color: '#fff'
+        color: '#fff',
+        fontWeight: 'bold'
     }
 });
 

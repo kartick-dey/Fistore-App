@@ -14,7 +14,6 @@ import colors from '../../constants/colors';
 
 import * as productActions from '../../store/actions/product';
 import Images from '../../constants/images';
-import Wizard from '../../components/Add Post/Wizard/wizard';
 
 const AddPost = (props) => {
   const dummyDesc = `Fish farming or pisciculture involves raising fish commercially in tanks or enclosures 
@@ -49,7 +48,7 @@ const AddPost = (props) => {
     props.navigation.openDrawer();
   };
   const openProfileScreen = () => {
-    props.navigation.navigate('Profile');
+      props.navigation.navigate('Profile');
   }
 
   // Image Handling function
@@ -125,33 +124,16 @@ const AddPost = (props) => {
     }
   };
 
-  {/* android:windowSoftInputMode="adjustPan | adjustResize" */ }
   return (
     <View style={{ flex: 1, zIndex: 1 }}>
       <Header onOpenDrawer={openDrawer} onOpenProfile={openProfileScreen}></Header>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <View style={{ width: '96%', height: '98%', backgroundColor: 'white', elevation: 1 }}>
-          <Wizard>
-            <Wizard.Step>
-              <View style={{ flex: 1 }}>
-                <Text>Enter Fish Details</Text>
-              </View>
-            </Wizard.Step>
-            <Wizard.Step>
-              <Text>Hello Add Post</Text>
-            </Wizard.Step>
-            <Wizard.Step>
-              <Text>Hello Add Post</Text>
-            </Wizard.Step>
-          </Wizard>
-        </View>
-      </View>
-      {/* <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.form}>
           <View style={styles.formControl}>
             <Text style={styles.label}>Fishery Center</Text>
             <TextInput placeholder="Ex. Somenath Fishry" autoCapitalize='words' style={styles.input} value={fisheryName}
               onChangeText={text => setFisheryName(text)} />
+            {/* android:windowSoftInputMode="adjustPan | adjustResize" */}
           </View>
           <View style={styles.formControl}>
             <Text style={styles.label}>Name of Fish</Text>
@@ -230,6 +212,7 @@ const AddPost = (props) => {
           <View style={styles.formControl}>
             <View style={styles.uploadContainer}>
               {image.uri ? (<View style={styles.imageContainer}>
+                {/* <Image source={Images.aqurium_1} style={styles.image}></Image> */}
                 <Image source={{ uri: image.uri }} style={styles.image}></Image>
               </View>) : null}
               <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
@@ -252,7 +235,7 @@ const AddPost = (props) => {
             </LinearGradient>
           </View>
         </View>
-      </ScrollView> */}
+      </ScrollView>
     </View>
   );
 }

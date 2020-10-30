@@ -16,7 +16,9 @@ const Header = (props) => {
                     <Text style={{ fontSize: width * 0.04, fontWeight: 'bold' }}>STORE</Text> </Text>
             </View>
             <View style={styles.profileContainer}>
-                <Icon name="person-circle-outline" size={width * 0.08} color="grey" />
+                <TouchableOpacity onPress={props.onOpenProfile}>
+                    <Icon name="person-circle-outline" size={width * 0.08} color="grey" />
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -24,16 +26,17 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: 50,
-        backgroundColor: '#fff',
+        height: 55,
+        backgroundColor: colors.bgColor,
         // justifyContent: 'space-evenly',
         alignItems: 'flex-start',
-        borderBottomColor: '#dddddd',
-        borderBottomWidth: 1,
+        // borderBottomColor: '#dddddd',
+        // borderBottomWidth: 1,
         paddingHorizontal: 15,
         paddingVertical: 9,
         flexDirection: 'row',
-        // zIndex: 1
+        // zIndex: 1,
+        elevation: 5
     },
     brandContainer: {
         flexDirection: 'row',

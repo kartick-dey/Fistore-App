@@ -1,8 +1,7 @@
 import { GoogleSignin } from '@react-native-community/google-signin';
-import { call } from 'react-native-reanimated';
 
 GoogleSignin.configure({
-    webClientId: '365903936294-4va1m6asl0gh126i8ed7mer1r7cnfkne.apps.googleusercontent.com',
+    webClientId: '365903936294-2ld7dn07f57i749ve7mkndsin2uldtcg.apps.googleusercontent.com',
     offlineAccess: true,
 });
 

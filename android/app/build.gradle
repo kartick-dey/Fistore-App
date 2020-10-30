@@ -192,6 +192,9 @@ dependencies {
 
     compile project(':react-native-vector-icons')
 
+    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+
     implementation(project(":react-native-google-signin"))
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {

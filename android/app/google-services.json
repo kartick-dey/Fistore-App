@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "365903936294",
-    "firebase_url": "https://fistore-dac9e.firebaseio.com",
-    "project_id": "fistore-dac9e",
-    "storage_bucket": "fistore-dac9e.appspot.com"
+    "project_number": "873279819257",
+    "firebase_url": "https://fistore-ab3ad.firebaseio.com",
+    "project_id": "fistore-ab3ad",
+    "storage_bucket": "fistore-ab3ad.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:365903936294:android:fa52d2fe8045f97e219fe7",
+        "mobilesdk_app_id": "1:873279819257:android:0291c2407f1ed149a3c128",
         "android_client_info": {
           "package_name": "com.fistore"
         }
       },
       "oauth_client": [
         {
-          "client_id": "365903936294-2ld7dn07f57i749ve7mkndsin2uldtcg.apps.googleusercontent.com",
+          "client_id": "873279819257-9v5caoeu5q5ssj9upas2ncblrl97as90.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fistore",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "365903936294-4va1m6asl0gh126i8ed7mer1r7cnfkne.apps.googleusercontent.com",
+          "client_id": "873279819257-m1u7hv6nv8kfjpi13bkcattasnlgi4qh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDg1GnGH7UFAishPqYME3DQzxSZ2Q2vweQ"
+          "current_key": "AIzaSyBEImzEycQRIQjrM-GoOho6KpymOsZJurU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "365903936294-4va1m6asl0gh126i8ed7mer1r7cnfkne.apps.googleusercontent.com",
+              "client_id": "873279819257-m1u7hv6nv8kfjpi13bkcattasnlgi4qh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

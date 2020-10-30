@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, Platform, Dimensions, StatusBar, TouchableOpacity } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, Image, StyleSheet, Platform, Dimensions, StatusBar, TouchableOpacity, Animated } from 'react-native';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import * as Animatable from 'react-native-animatable';
 import Images from '../../constants/images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,12 +11,13 @@ import { useSelector } from 'react-redux';
 import FishCard from '../../components/Home/FishCard';
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
-const MAX_HEIGHT = 350
+const MAX_HEIGHT = 350;
 
 const { width } = Dimensions.get('window');
 
 const ProductDetails = (props) => {
   const selectedProduct = props.route.params;
+  const navTitleView = useRef(null);
   let postedAt;
   if ((new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) === 0) {
     postedAt = 'Today'
@@ -43,19 +45,28 @@ const ProductDetails = (props) => {
       <HeaderImageScrollView
         maxHeight={MAX_HEIGHT}
         minHeight={MIN_HEIGHT}
-        maxOverlayOpacity={0.5}
+        maxOverlayOpacity={0.6}
         minOverlayOpacity={0.3}
         renderHeader={() =>
-          (<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={{ uri: selectedProduct.image }} style={styles.image} />
-            <View style={{ position: 'absolute' }}>
-              <Text style={styles.imageText}>{selectedProduct.fisheryName}</Text>
-            </View>
-          </View>)
+          (<Image source={{ uri: selectedProduct.image }} style={styles.image} />)
         }
-      >
+
+        renderForeground={() => (
+          <View style={styles.titleContainer}>
+            <Text style={styles.imageTitle}>{selectedProduct.fisheryName}</Text>
+          </View>
+        )}
+
+        renderFixedForeground={() => (
+          <Animatable.View style={styles.navTitleView} ref={navTitleView}>
+            <Text style={styles.navTitle}>{selectedProduct.fisheryName}</Text>
+          </Animatable.View>
+        )}
+        >
         <TriggeringView
           style={styles.section}
+          onHide={() => navTitleView.current.fadeInUp(200)}
+          onDisplay={() => navTitleView.current.fadeOut(200)}
         >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <View>
@@ -135,15 +146,23 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    flexGrow: 1,
     height: MAX_HEIGHT,
     width: width,
     alignSelf: 'stretch',
     resizeMode: 'cover'
   },
-  imageText: {
-    fontSize: 30,
-    color: colors.textColor,
+  titleContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageTitle: {
+    color: '#000',
+    // backgroundColor: 'transparent',
+    // fontSize: 24,
+    fontSize: 24,
+    // color: colors.textColor,
     backgroundColor: '#ddd',
     paddingVertical: 5,
     paddingHorizontal: 20,
@@ -244,22 +263,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  imageTitle: {
-    color: 'white',
-    backgroundColor: 'transparent',
-    fontSize: 24,
-  },
   navTitleView: {
     height: MIN_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 40 : 5,
+    paddingTop: Platform.OS === 'ios' ? 40 : 0,
     opacity: 0,
   },
   navTitle: {
     color: 'white',
-    fontSize: 18,
-    backgroundColor: 'transparent',
+    fontSize: 24,
+    backgroundColor: 'grey',
+    // fontWeight: 'bold',
+    textTransform: "capitalize",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 50,
   },
   sectionLarge: {
     minHeight: 300,

@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import * as authActions from '../store/actions/auth';
 
 import Images from '../constants/images';
+import colors from '../constants/colors';
 
 const DrawerContent = (props) => {
     const [isDarkTheme, setIsDarkTheme] = React.useState(false);
@@ -33,12 +34,12 @@ const DrawerContent = (props) => {
                 return;
             }
             console.log(result);
-            props.navigation.closeDrawer();;
+            props.navigation.closeDrawer();
             props.navigation.navigate('Auth');
         }));
     };
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: colors.bgColor }}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>

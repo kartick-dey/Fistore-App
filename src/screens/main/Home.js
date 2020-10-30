@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, RefreshControl, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, RefreshControl, TouchableOpacity, Image, ActivityIndicator, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Swiper from 'react-native-swiper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,6 +11,7 @@ import MarketCard from '../../components/Home/MarketCard';
 import images from '../../constants/images';
 import * as productActions from '../../store/actions/product';
 import colors from '../../constants/colors';
+import SearchBox from '../../components/searchBox';
 
 const Home = (props) => {
 
@@ -60,6 +61,9 @@ const Home = (props) => {
 
     const openDrawer = () => {
         props.navigation.openDrawer();
+    };
+    const openProfileScreen = () => {
+        props.navigation.navigate('Profile');
     }
     const fishCards = products.map(product => (
         <TouchableOpacity key={product.id} onPress={() => props.navigation.navigate('ProductDetails', product)}>
@@ -76,7 +80,9 @@ const Home = (props) => {
     ));
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <Header onOpenDrawer={openDrawer}></Header>
+            <StatusBar backgroundColor="#FFD2CE" barStyle='dark-content'/>
+            <Header onOpenDrawer={openDrawer} onOpenProfile={openProfileScreen}></Header>
+            <SearchBox />
             <ScrollView scrollEventThrottle={16}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -97,42 +103,42 @@ const Home = (props) => {
                     </View>
                     <Text style={styles.heading}>Explore Categories</Text>
                     <View style={styles.categoryContainer}>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'Spawn')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Spawn', allProducts: products})}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.seed_fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Spawn Fish</Text>
 
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'Seed')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Seed', allProducts: products})}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.fish_seed} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Seed Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'Aqurium')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Aquarium', allProducts: products})}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.aqurium_fish} style={styles.categoryImg}></Image>
                             </View>
-                            <Text style={styles.categroryBtnText}>Aqurium Fish</Text>
+                            <Text style={styles.categroryBtnText}>Aquarium Fish</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.categoryContainer, , { marginTop: 10 }]}>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'Fish')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Fish', allProducts: products})}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'Sea Fish')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Sea Fish', allProducts: products})}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.sea_fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Sea Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', 'All')}>
+                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'All', allProducts: products})}>
                             <View style={styles.categoryIcon}>
-                                <FontAwesome name="arrow-right" size={30} color="#fff" />
+                                <FontAwesome name="angle-right" size={30} color="#fff" />
                             </View>
                             <Text style={styles.categroryBtnText}>See all..</Text>
                         </TouchableOpacity>
@@ -145,7 +151,7 @@ const Home = (props) => {
                         <ActivityIndicator size='large' color={colors.primary}></ActivityIndicator>
                     </View> :
                         <View style={styles.fishContainer}>
-                            {fishCards}
+                            {/* {fishCards} */}
                         </View>}
                 </View>
             </ScrollView>

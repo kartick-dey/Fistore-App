@@ -6,8 +6,12 @@ const LoginButton = (props) => {
     return (
         <TouchableOpacity onPress={props.onPress}>
             <View style={[styles.loginButton, { backgroundColor: props.bgColor }]}>
+                <View style={{width: '30%', justifyContent: 'center', alignItems: 'center'}}>
                 <Icon name={props.iconName} style={styles.icon}></Icon>
-                <Text style={styles.text}>Continue with {props.type}</Text>
+                </View>
+                <View style={{width: '70%', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={styles.text}>{props.type === 'Phone' ? 'Send OTP' : `Continue with ${props.type}`}</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: width,
         height: width * 0.15,
-        borderRadius: 5
+        borderRadius: 5,
     },
     icon: {
         justifyContent: 'flex-start',
@@ -37,7 +41,8 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 15,
         fontWeight: 'bold',
-        letterSpacing: 1
+        letterSpacing: 1,
+        alignSelf: 'stretch'
     }
 });
 

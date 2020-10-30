@@ -12,7 +12,7 @@ import ProductOverview, {ProductOverviewScreenOption} from '../../screens/main/P
 import ProductDetailsScreen from '../../screens/main/ProductDetails';
 import AddPostScreen from '../../screens/main/AddPost';
 import SavedScreen from '../../screens/main/Saved';
-import SearchScreen from '../../screens/main/Search';
+import MessageScreen from '../../screens/main/Message';
 import NotificationScreen from '../../screens/main/Notification';
 import ProfileScreen from '../../screens/Profile';
 import DrawerContent from '../../screens/DrawerContent';
@@ -21,10 +21,10 @@ import colors from '../../constants/colors';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStackScreens = (props) => {
+const MainStackScreens = (props) => {
     return (
         <Stack.Navigator initialRouteName="Home" >
-            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false}}/>
+            <Stack.Screen name="Main" component={MainTabScreens} options={{ headerShown: false}}/>
             <Stack.Screen name="ProductOverview" component={ProductOverview}  options={ProductOverviewScreenOption} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} options={{
                 headerTitle: false,
@@ -32,6 +32,7 @@ const HomeStackScreens = (props) => {
                 headerTransparent: true,
                 headerTintColor: '#fff'
             }}/>
+            <Stack.Screen name="Profile" component={ProfileScreen}  options={{ headerShown: false}}></Stack.Screen>
         </Stack.Navigator>
     );
 };
@@ -49,13 +50,14 @@ const MainTabScreens = (props) => {
                     padding: 0,
                 },
                 tabStyle: {
-                    paddingVertical: 5
+                    paddingVertical: 5,
+                    // backgroundColor: colors.liner
                 },
                 safeAreaInsets: {
-                    bottom: 5
+                    // bottom: 5,
                 },
             }}>
-            <Tab.Screen name="Home" component={HomeStackScreens}
+            <Tab.Screen name="Home" component={HomeScreen}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarColor: '#fff',
@@ -64,17 +66,17 @@ const MainTabScreens = (props) => {
                     ),
                 }} />
 
-            <Tab.Screen name="Search" component={SearchScreen}
+            <Tab.Screen name="Message" component={MessageScreen}
                 options={{
-                    tabBarLabel: 'Search',
+                    tabBarLabel: 'Message',
                     tabBarColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <FeatherIcon name="search" color={color} size={26} />
+                        <Icon name="chatbox-outline" size={26} color={color} />
                     ),
                 }} />
             <Tab.Screen name="Add Post" component={AddPostScreen}
                 options={{
-                    tabBarLabel: 'AddPost',
+                    tabBarLabel: 'Add Post',
                     tabBarColor: '#fff',
                     tabBarIcon: ({ color }) => (
                         <FeatherIcon name="plus-square" color={color} size={27} />
@@ -104,12 +106,14 @@ const MainTabScreens = (props) => {
 const SideBarScreens = (props) => {
     return (
         <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-                headerShown: false
-            }}
+            initialRouteName="Profile"
         >
-            <Stack.Screen name="Login" component={ProfileScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} options={{
+                headerTitle: false,
+                headerBackTitleVisible: false,
+                headerTransparent: true,
+                headerTintColor: '#fff'
+            }}/>
         </Stack.Navigator>
     );
 }
@@ -119,7 +123,7 @@ const Drawer = createDrawerNavigator();
 const MainNavigator = (props) => {
     return (
         <Drawer.Navigator drawerContent={props => <DrawerContent {...props}></DrawerContent>}>
-            <Drawer.Screen name="MainTab" component={MainTabScreens}></Drawer.Screen>
+            <Drawer.Screen name="Main" component={MainStackScreens}></Drawer.Screen>
         </Drawer.Navigator>
     );
 }
