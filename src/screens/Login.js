@@ -12,7 +12,6 @@ import auth from '@react-native-firebase/auth';
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(0);
-  const [confirm, setConfirm] = useState();
 
   const bgGoogleButton = '#DB4437';
   const bgFacebookButton = '#3b5998';
@@ -30,6 +29,7 @@ const Login = (props) => {
         }
         props.navigation.navigate('Main');
         setIsLoading(false);
+        setIsConfirm(true);
       }));
     } catch (error) {
       console.log('Error while calling backend API')
@@ -37,15 +37,21 @@ const Login = (props) => {
   };
 
   const signInWithPhone = async () => {
+    setIsLoading(true);
     if (phoneNumber.length !== 10) {
       alert("Invalid phone number");
       return;
     }
-    // const number = Number(phoneNumber);
-    // console.log("Phone number: ", typeof(number));
-    // alert(`Phone sign in ${phoneNumber}`);
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setIsLoading(false)
+    const confirmation = await auth().signInWithPhoneNumber(`+91-${phoneNumber}`);
     console.log('Confirmation : ', confirmation);
+    if (confirmation._auth._authResult) {
+      // alert("OTP send");
+      props.navigation.navigate('VerifyCode', {phone: phoneNumber, onConfirmation: confirmation});
+      setIsLoading(false)
+    } else {
+      alert("Internal server error")
+    }
   };
 
   const onGooglePress = () => {
@@ -82,7 +88,9 @@ const Login = (props) => {
       <View style={styles.brandContainer}>
         <BrandLogo></BrandLogo>
       </View>
-      {isLoading ? (<ActivityIndicator size="large" color="red" style={{ opacity: 1, marginTop: 20 }}></ActivityIndicator>) :
+      {isLoading ? (<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="red" style={{ opacity: 1, marginTop: 20, alignSelf: 'center' }}></ActivityIndicator>
+      </View>) :
         (<View style={[styles.loginButtonContainer]}>
           <View>
             <View style={{ paddingVertical: 20 }}>
@@ -96,7 +104,7 @@ const Login = (props) => {
                 </View>
               </View>
             </View>
-            <LoginButton onPress={signInWithPhone} bgColor={bgPhoneButton} iconName='phone-square-alt' type="Phone"></LoginButton>
+            <LoginButton onPress={signInWithPhone} bgColor={bgPhoneButton} iconName='' type="Phone"></LoginButton>
             <View style={{ paddingHorizontal: 20, paddingVertical: 20 }}>
               <Text style={{ alignSelf: 'center' }}>------------------------OR---------------------------</Text>
             </View>

@@ -14,7 +14,6 @@
         "photo": "https://lh5.googleusercontent.com/-CzP-H82WxWM/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuck8dFmtBdvlw9IZKmSvSCXyMeF7vQ/s96-c/photo.jpg"
     }
 },
-
 "Facebook-SignIn-User-Info": {
     "accessToken": "EAAmP2b0mxwIBAIjmEMrSBII2OIV0i36zZCZBraEkEHrqW6IvTZCBIId1ThUFbUqZAXONO56drG5Oah3p5JxaZAEoJeLIWSxiQFgRcuQrpS8eE8AWfxGZAkGZBWB5rFULJ9WbVZCvpVV7CIhUpQfZBRJdT9AUPVSelOOEluz6mB5TKTxGBBFHSHhqnQuSeoZBRKrBZBHiiTevOJVmg9zc1YDsvQUiwwhH9dbs9UZD",
     "accessTokenSource": "FACEBOOK_APPLICATION_SERVICE",
@@ -29,7 +28,6 @@
     ],
     "userID": "2923987211155958"
 },
-
 "data": [
     {
         "_id": "5f8ff6079826c005b5775862",
@@ -46,3 +44,140 @@
         "__v": 0
     }
 ]
+
+"Phone number confirmation": {
+    "_auth": {
+        "_app": {
+            "_automaticDataCollectionEnabled": true,
+            "_deleteApp": [Function bound deleteApp
+            ],
+            "_deleted": false,
+            "_initialized": true,
+            "_name": "[DEFAULT]",
+            "_nativeInitialized": true,
+            "_options": [Object
+            ]
+        },
+        "_authResult": true,
+        "_config": {
+            "ModuleClass": [Function FirebaseAuthModule
+            ],
+            "hasCustomUrlOrRegionSupport": false,
+            "hasMultiAppSupport": true,
+            "namespace": "auth",
+            "nativeEvents": [Array
+            ],
+            "nativeModuleName": "RNFBAuthModule",
+            "statics": [Object
+            ],
+            "version": "9.3.1"
+        },
+        "_customUrlOrRegion": undefined,
+        "_languageCode": null,
+        "_nativeModule": {
+            "APP_LANGUAGE": [Object
+            ],
+            "APP_USER": [Object
+            ],
+            "addAuthStateListener": [Function anonymous
+            ],
+            "addIdTokenListener": [Function anonymous
+            ],
+            "applyActionCode": [Function anonymous
+            ],
+            "checkActionCode": [Function anonymous
+            ],
+            "confirmPasswordReset": [Function anonymous
+            ],
+            "confirmationResultConfirm": [Function anonymous
+            ],
+            "createUserWithEmailAndPassword": [Function anonymous
+            ],
+            "delete": [Function anonymous
+            ],
+            "fetchSignInMethodsForEmail": [Function anonymous
+            ],
+            "getConstants": [Function anonymous
+            ],
+            "getIdToken": [Function anonymous
+            ],
+            "getIdTokenResult": [Function anonymous
+            ],
+            "linkWithCredential": [Function anonymous
+            ],
+            "reauthenticateWithCredential": [Function anonymous
+            ],
+            "reload": [Function anonymous
+            ],
+            "removeAuthStateListener": [Function anonymous
+            ],
+            "removeIdTokenListener": [Function anonymous
+            ],
+            "sendEmailVerification": [Function anonymous
+            ],
+            "sendPasswordResetEmail": [Function anonymous
+            ],
+            "sendSignInLinkToEmail": [Function anonymous
+            ],
+            "setAutoRetrievedSmsCodeForPhoneNumber": [Function anonymous
+            ],
+            "setLanguageCode": [Function anonymous
+            ],
+            "signInAnonymously": [Function anonymous
+            ],
+            "signInWithCredential": [Function anonymous
+            ],
+            "signInWithCustomToken": [Function anonymous
+            ],
+            "signInWithEmailAndPassword": [Function anonymous
+            ],
+            "signInWithEmailLink": [Function anonymous
+            ],
+            "signInWithPhoneNumber": [Function anonymous
+            ],
+            "signOut": [Function anonymous
+            ],
+            "unlink": [Function anonymous
+            ],
+            "updateEmail": [Function anonymous
+            ],
+            "updatePassword": [Function anonymous
+            ],
+            "updatePhoneNumber": [Function anonymous
+            ],
+            "updateProfile": [Function anonymous
+            ],
+            "useDeviceLanguage": [Function anonymous
+            ],
+            "verifyBeforeUpdateEmail": [Function anonymous
+            ],
+            "verifyPasswordResetCode": [Function anonymous
+            ],
+            "verifyPhoneNumber": [Function anonymous
+            ]
+        },
+        "_settings": null,
+        "_user": null
+    },
+    "_verificationId": "AE5I7A52l0BvcgBygWzASfHenSiWSEvUhplS6CxQ5_hrxr-zbTHz9zjkRp_dNnvXeMmjn1ezC3gBzpSFtSL9BxSYbJDNLpNiFa3ORCOqecJ5GYSuoQCLyDSaWhXqDM6IUuIaf3VOdoLm6tEpBX-DNM-bhcFC5JMll-8lCVrmwAhZd8MpYVpggcHLbdJTgWNuVIdgJleCcYp4_yD7ooJuoWyclY3AESjmgQ"
+}
+
+"Firebase-Phone-Signin-user-info": {
+    "additionalUserInfo": {
+        "isNewUser": true
+    },
+    "user": {
+        "displayName": null,
+        "email": null,
+        "emailVerified": false,
+        "isAnonymous": false,
+        "metadata": [Object
+        ],
+        "phoneNumber": "+918170990726",
+        "photoURL": null,
+        "providerData": [Array
+        ],
+        "providerId": "firebase",
+        "uid": "ybH6GLFXPXXMlcl3Wk0RUMxh26t2"
+    }
+}

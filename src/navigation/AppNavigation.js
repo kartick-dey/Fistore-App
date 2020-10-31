@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import SplashScreen from '../screens/Splash';
 import LoginScreen from '../screens/Login';
 import MainNavigator from './navigators/Navigators';
-import ProfileScreen from '../screens/Profile';
+import VerifyToken from '../screens/verifyCode';
 
 const Stack = createStackNavigator()
 
@@ -18,9 +18,10 @@ class AppNavigation extends Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Splash" screenOptions={this.screenOption}>
+                <Stack.Navigator initialRouteName="Main" screenOptions={this.screenOption}>
                     <Stack.Screen name="Splash" component={SplashScreen}></Stack.Screen>
                     <Stack.Screen name="Auth" component={LoginScreen}></Stack.Screen>
+                    <Stack.Screen name="VerifyCode" component={VerifyToken}></Stack.Screen>
                     <Stack.Screen name="Main" component={MainNavigator}></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

@@ -6,9 +6,9 @@ const LoginButton = (props) => {
     return (
         <TouchableOpacity onPress={props.onPress}>
             <View style={[styles.loginButton, { backgroundColor: props.bgColor }]}>
-                <View style={{width: '30%', justifyContent: 'center', alignItems: 'center'}}>
+                { props.iconName ? <View style={{width: '30%', justifyContent: 'center', alignItems: 'center'}}>
                 <Icon name={props.iconName} style={styles.icon}></Icon>
-                </View>
+                </View> : null}
                 <View style={{width: '70%', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={styles.text}>{props.type === 'Phone' ? 'Send OTP' : `Continue with ${props.type}`}</Text>
                 </View>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     loginButton: {
         paddingHorizontal: 20,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
         width: width,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         letterSpacing: 1,
-        alignSelf: 'stretch'
+        alignSelf: 'center'
     }
 });
 
