@@ -1,6 +1,16 @@
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
 
 const permissions = ['public_profile', 'email'];
+const FIELDS = 'name,email,picture';
+
+const BASE_URL = `https://graph.facebook.com/v8.0/me?fields=${FIELDS}`;
+
+const getUserInfo= (accessToken, callback) => {
+    fetch(`${BASE_URL}&access_token=${accessToken}&debug=all`)
+    .then(res => res.json())
+    .then(data => callback(null, data))
+    .catch(error => callback(error))
+};
 
 const loginWithFacebook = (callback) => {
     LoginManager.logInWithPermissions(permissions)
@@ -17,7 +27,13 @@ const loginWithFacebook = (callback) => {
             .then(data => {
                 console.log("Access token result: ", data);
                 const { accessToken } = data;
-                return callback(null, accessToken);
+                getUserInfo(accessToken, (error, userInfo) => {
+                    if (error) {
+                        return callback(error);
+                    }
+                    return callback(null, userInfo);
+                });
+                // return callback(null, accessToken);
                 // return Promise.resolve(accessToken);
             })
         }

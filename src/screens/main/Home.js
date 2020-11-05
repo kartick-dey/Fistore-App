@@ -5,9 +5,8 @@ import Swiper from 'react-native-swiper';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Header from '../../components/header';
-import CategoryCard from '../../components/Home/CategoryCard';
-import FishCard from '../../components/Home/FishCard';
-import MarketCard from '../../components/Home/MarketCard';
+import FishCard from '../../components/FishCard';
+import MarketCard from '../../components/MarketCard';
 import images from '../../constants/images';
 import * as productActions from '../../store/actions/product';
 import colors from '../../constants/colors';
@@ -19,10 +18,8 @@ const Home = (props) => {
     products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     const [refreshing, setRefreshing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     const dispatch = useDispatch();
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         const fetchAllProduct = async () => {
             setIsLoading(true);
             dispatch(productActions.getAllProducts((error, result) => {
@@ -37,8 +34,6 @@ const Home = (props) => {
         };
         fetchAllProduct();
     }, [dispatch]);
-
-
     const onRefresh = React.useCallback(() => {
         setIsLoading(true);
         setRefreshing(true);
@@ -57,8 +52,6 @@ const Home = (props) => {
         };
         fetchAllProduct();
     }, [dispatch]);
-
-
     const openDrawer = () => {
         props.navigation.openDrawer();
     };
@@ -80,7 +73,7 @@ const Home = (props) => {
     ));
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <StatusBar backgroundColor="#FFD2CE" barStyle='dark-content'/>
+            <StatusBar backgroundColor="#FFD2CE" barStyle='dark-content' />
             <Header onOpenDrawer={openDrawer} onOpenProfile={openProfileScreen}></Header>
             <SearchBox />
             <ScrollView scrollEventThrottle={16}
@@ -103,20 +96,22 @@ const Home = (props) => {
                     </View>
                     <Text style={styles.heading}>Explore Categories</Text>
                     <View style={styles.categoryContainer}>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Spawn', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'Spawn', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.seed_fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Spawn Fish</Text>
-
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Seed', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'Seed', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.fish_seed} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Seed Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Aquarium', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'Aquarium', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.aqurium_fish} style={styles.categoryImg}></Image>
                             </View>
@@ -124,19 +119,22 @@ const Home = (props) => {
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.categoryContainer, , { marginTop: 10 }]}>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Fish', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'Fish', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'Sea Fish', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'Sea Fish', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <Image source={images.sea_fish} style={styles.categoryImg}></Image>
                             </View>
                             <Text style={styles.categroryBtnText}>Sea Fish</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.categoryBtn} onPress={() => props.navigation.navigate('ProductOverview', { category: 'All', allProducts: products})}>
+                        <TouchableOpacity style={styles.categoryBtn}
+                            onPress={() => props.navigation.navigate('ProductOverview', { category: 'All', allProducts: products })}>
                             <View style={styles.categoryIcon}>
                                 <FontAwesome name="angle-right" size={30} color="#fff" />
                             </View>
@@ -151,7 +149,7 @@ const Home = (props) => {
                         <ActivityIndicator size='large' color={colors.primary}></ActivityIndicator>
                     </View> :
                         <View style={styles.fishContainer}>
-                            {/* {fishCards} */}
+                            {fishCards}
                         </View>}
                 </View>
             </ScrollView>
@@ -205,10 +203,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-        width: 80,
-        height: 80,
-        backgroundColor: colors.hover,
-        borderRadius: 50,
+        width: 100,
+        height: 100,
+        backgroundColor: colors.bgColor,
+        borderRadius: 5,
         padding: 3
     },
     categoryImg: {
@@ -217,7 +215,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: null,
         resizeMode: 'cover',
-        borderRadius: 50
+        borderRadius: 5
     },
     categroryBtnText: {
         alignSelf: 'center',

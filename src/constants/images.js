@@ -23,6 +23,10 @@ const Images = {
   fish_6: require('../../assets/image/fish-6.jpg'),
   fish_7: require('../../assets/image/fish-7.jpg'),
   fish_8: require('../../assets/image/fish-8.jpg'),
+  profile_bg: require('../../assets/image/profile-bg.jpg'),
+  profile_bg_1: require('../../assets/image/profile-bg-1.jpg'),
+  profile_bg_2: require('../../assets/image/profile-bg-2.jpg'),
+  demo_location: require('../../assets/image/demo-location.jpg'),
 };
 
 export default Images;

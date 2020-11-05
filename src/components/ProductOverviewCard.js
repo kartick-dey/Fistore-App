@@ -3,8 +3,7 @@ import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'rea
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Feather';
 import StarRating from 'react-native-star-rating';
-import colors from '../../constants/colors';
-import Images from '../../constants/images';
+import colors from '../constants/colors';
 
 const { width } = Dimensions.get('window');
 
@@ -61,13 +60,23 @@ const ProductOverviewCard = (props) => {
                                 rating={4} />
                         </View>
                     </TouchableOpacity>
-                    <View style={styles.contactContainer}>
+                    {/* <View style={styles.contactContainer}>
                         <TouchableOpacity style={styles.contactBtn}>
                             <Icon name="phone-call" size={12} color='#fff' style={{ alignSelf: 'center', paddingHorizontal: 5 }}></Icon>
                             <Text style={styles.btnText}>Contact Seller</Text>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
+            </View>
+            <View style={styles.contactContainer}>
+                <TouchableOpacity style={styles.contactBtn}>
+                    <Icon name="phone-call" size={12} color={colors.primary} style={{ alignSelf: 'center', paddingRight: 8 }}></Icon>
+                    <Text style={styles.btnText}>Call Now</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.contactBtn}>
+                    <Icon name="message-square" size={13} color={colors.primary} style={{ alignSelf: 'center', paddingRight: 8 }}></Icon>
+                    <Text style={styles.btnText}>Message</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -78,24 +87,24 @@ const styles = StyleSheet.create({
         margin: 5,
         alignSelf: 'center',
         width: width - 15,
-        height: width * 0.46,
+        height: width * 0.55,
         backgroundColor: '#fff',
         elevation: 0.5,
     },
     brandContainer: {
         padding: 5,
-        height: '26%',
+        height: '20%',
         width: '100%',
         borderBottomColor: '#dddddd',
         borderBottomWidth: 0.5,
         flexDirection: 'row',
     },
     productContainer: {
-        height: '74%',
+        height: '58%',
         width: '100%',
         flexDirection: 'row',
         borderBottomColor: '#dddddd',
-        // borderBottomWidth: 0.5,
+        borderBottomWidth: 0.5,
         padding: 5
     },
     iconContainer: {
@@ -162,24 +171,33 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     contactContainer: {
+        height: '22%',
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 12
+        // paddingVertical: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        paddingBottom: 2
     },
     contactBtn: {
-        alignSelf: 'flex-start',
-        backgroundColor: colors.liner,
-        paddingVertical: 5,
-        paddingHorizontal: 20,
+        width: '45%',
+        // alignSelf: 'flex-start',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.bgColor,
+        paddingVertical: 8,
+        // paddingHorizontal: 30,
         flexDirection: 'row',
-        borderRadius: 5
+        borderRadius: 2,
+        elevation: 1
     },
     btnText: {
         textAlign: 'center',
-        paddingBottom: 2,
-        color: '#fff',
-        fontWeight: 'bold'
+        // paddingBottom: 2,
+        color: colors.primary,
+        fontWeight: 'bold',
+        fontSize: 16
     }
 });
 

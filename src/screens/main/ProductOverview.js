@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import ProductOverviewCard from '../../components/Home/ProductOverviewCard';
-import { useSelector } from 'react-redux';
+import ProductOverviewCard from '../../components/ProductOverviewCard';
 import colors from '../../constants/colors';
 import SearchBox from '../../components/searchBox';
 
@@ -20,15 +19,7 @@ const ProductOverview = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <SearchBox />
-      {/* <ScrollView> */}
       {productOverviewCards}
-      {/* <ProductOverviewCard></ProductOverviewCard>
-      <ProductOverviewCard></ProductOverviewCard>
-      <ProductOverviewCard></ProductOverviewCard>
-      <ProductOverviewCard></ProductOverviewCard>
-      <ProductOverviewCard></ProductOverviewCard>
-      <ProductOverviewCard></ProductOverviewCard> */}
-      {/* </ScrollView> */}
     </View>
   );
 };

@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import colors from '../../constants/colors';
+import colors from '../constants/colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
-import { IMG_ENDPOINT } from '../../../apiEndpoint';
 
 const { height, width } = Dimensions.get('window');
 

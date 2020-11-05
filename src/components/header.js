@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../constants/colors';
+import Images from '../constants/images';
 
 const { width } = Dimensions.get('screen');
 
@@ -16,8 +17,9 @@ const Header = (props) => {
                     <Text style={{ fontSize: width * 0.04, fontWeight: 'bold' }}>STORE</Text> </Text>
             </View>
             <View style={styles.profileContainer}>
-                <TouchableOpacity onPress={props.onOpenProfile}>
-                    <Icon name="person-circle-outline" size={width * 0.08} color="grey" />
+                <TouchableOpacity onPress={props.onOpenProfile} style={styles.profileIconContainer}>
+                    <Image source={Images.avater} style={styles.profileIcon} />
+                    {/* <Icon name="person-circle-outline" size={width * 0.08} color="grey" /> */}
                 </TouchableOpacity>
             </View>
         </View>
@@ -52,7 +54,22 @@ const styles = StyleSheet.create({
     profileContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        alignSelf: 'center'
+    },
+    profileIconContainer: { 
+        width: 33, 
+        height: 33, 
+        borderRadius: 33 / 2, 
+        overflow: 'hidden',
+        borderColor: '#ccc',
+        borderWidth: 1,
+    },
+    profileIcon: { 
+        flex: 1, 
+        width: null, 
+        height: null, 
+        resizeMode: 'cover'
     }
 });
 

@@ -9,9 +9,9 @@ const loginWithGoogle = async (callback) => {
     try {
         await GoogleSignin.hasPlayServices();
         const user = await GoogleSignin.signIn();
-        const { idToken, accessToken } = await GoogleSignin.getTokens();
-        console.log('Accestoken from Google: ', accessToken);
-        return callback(null, accessToken);
+        // const { idToken, accessToken } = await GoogleSignin.getTokens();
+        // console.log('Accestoken from Google: ', accessToken);
+        return callback(null, user);
     } catch (error) {
         console.log('Error in Google Login: ', error);
         return callback(error);

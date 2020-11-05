@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Dimensions, Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
-import colors from '../../constants/colors';
+import colors from '../constants/colors';
 
 const { height, width } = Dimensions.get('window');
 

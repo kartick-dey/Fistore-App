@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const LoginButton = (props) => {
     return (
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
             <View style={[styles.loginButton, { backgroundColor: props.bgColor }]}>
-                { props.iconName ? <View style={{width: '30%', justifyContent: 'center', alignItems: 'center'}}>
+                { props.iconName ? <View style={{width: '20%', justifyContent: 'center', alignItems: 'center'}}>
                 <Icon name={props.iconName} style={styles.icon}></Icon>
                 </View> : null}
                 <View style={{width: '70%', justifyContent: 'center', alignItems: 'center'}}>
@@ -27,13 +27,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        width: width,
+        width: width - 10,
         height: width * 0.15,
-        borderRadius: 5,
+        borderRadius: 0,
+        elevation: 1
     },
     icon: {
         justifyContent: 'flex-start',
-        paddingRight: 30,
+        // paddingRight: 30,
         fontSize: 25,
         color: '#fff'
     },
@@ -42,7 +43,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         letterSpacing: 1,
-        alignSelf: 'center'
     }
 });
 

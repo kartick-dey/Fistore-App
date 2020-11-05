@@ -18,7 +18,7 @@ class AppNavigation extends Component {
     render() {
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Main" screenOptions={this.screenOption}>
+                <Stack.Navigator initialRouteName="Splash" screenOptions={this.screenOption}>
                     <Stack.Screen name="Splash" component={SplashScreen}></Stack.Screen>
                     <Stack.Screen name="Auth" component={LoginScreen}></Stack.Screen>
                     <Stack.Screen name="VerifyCode" component={VerifyToken}></Stack.Screen>

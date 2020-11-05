@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import colors from '../../constants/colors';
 import { useSelector } from 'react-redux';
 
-import FishCard from '../../components/Home/FishCard';
+import FishCard from '../../components/FishCard';
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
@@ -17,6 +17,7 @@ const { width } = Dimensions.get('window');
 
 const ProductDetails = (props) => {
   const selectedProduct = props.route.params;
+  const [saved, setSaved] = React.useState(false);
   const navTitleView = useRef(null);
   let postedAt;
   if ((new Date().getDay() - new Date(selectedProduct.createdAt).getDay()) === 0) {
@@ -62,18 +63,26 @@ const ProductDetails = (props) => {
             <Text style={styles.navTitle}>{selectedProduct.fisheryName}</Text>
           </Animatable.View>
         )}
-        >
+      >
         <TriggeringView
           style={styles.section}
           onHide={() => navTitleView.current.fadeInUp(200)}
           onDisplay={() => navTitleView.current.fadeOut(200)}
         >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <View>
-              <Text style={styles.title}>{selectedProduct.fishName}</Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Text>Posted:</Text>
-                <Text style={{ paddingHorizontal: 5 }}>{postedAt}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center', marginLeft: 10 }} onPress={() => setSaved(!saved)}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <FontAwesome name={saved ? 'bookmark' : 'bookmark-o'} size={25} color={colors.primary} />
+                  <Text>{saved ? 'Saved' : 'Save'}</Text>
+                </View>
+              </TouchableOpacity>
+              <View>
+                <Text style={styles.title}>{selectedProduct.fishName}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text>Posted:</Text>
+                  <Text style={{ paddingHorizontal: 5 }}>{postedAt}</Text>
+                </View>
               </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', alignSelf: 'center' }}>
@@ -106,9 +115,9 @@ const ProductDetails = (props) => {
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
               <FontAwesome name='inr' size={18} color={colors.primary} />
               <View style={{ flexDirection: 'row', paddingHorizontal: 5 }}>
-                <Text style={{ fontSize: 25 }}>{selectedProduct.price}</Text>
-                <Text style={{ fontSize: 25 }}>/</Text>
-                <Text style={{ fontSize: 25 }}>{selectedProduct.unit}</Text>
+                <Text style={{ fontSize: 25, color: colors.primary }}>{selectedProduct.price}</Text>
+                <Text style={{ fontSize: 25, color: colors.primary }}>/</Text>
+                <Text style={{ fontSize: 25, color: colors.primary }}>{selectedProduct.unit.toLowerCase()}</Text>
               </View>
             </View>
           </View>
@@ -116,11 +125,11 @@ const ProductDetails = (props) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
               <TouchableOpacity style={styles.btn}>
                 <Icon name="phone-call" size={14} color='#fff' style={{ alignSelf: 'center' }}></Icon>
-                <Text style={styles.btnTitle}>Contact</Text>
+                <Text style={styles.btnTitle}>Call Now</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btn}>
-                <FontAwesome name="bookmark-o" size={16} color='#fff' style={{ alignSelf: 'center' }} />
-                <Text style={styles.btnTitle}>Save</Text>
+                <FontAwesome name="comments" size={18} color='#fff' style={{ alignSelf: 'center' }} />
+                <Text style={styles.btnTitle}>Message</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -17,6 +17,8 @@ import NotificationScreen from '../../screens/main/Notification';
 import ProfileScreen from '../../screens/Profile';
 import DrawerContent from '../../screens/DrawerContent';
 import colors from '../../constants/colors';
+import MyProduct from '../../screens/MyProducts';
+import EditProfile from '../../screens/EditProfile';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -33,6 +35,8 @@ const MainStackScreens = (props) => {
                 headerTintColor: '#fff'
             }}/>
             <Stack.Screen name="Profile" component={ProfileScreen}  options={{ headerShown: false}}></Stack.Screen>
+            <Stack.Screen name="MyProduct" component={MyProduct}  options={{ headerShown: false}}></Stack.Screen>
+            <Stack.Screen name="EditProfile" component={EditProfile}  options={{ headerShown: false}}></Stack.Screen>
         </Stack.Navigator>
     );
 };

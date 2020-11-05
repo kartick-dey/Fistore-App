@@ -2,9 +2,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import axios from 'axios';
+import auth from '@react-native-firebase/auth';
 
-import {API_URL} from '../../../apiEndpoint';
+import { API_URL } from '../../../apiEndpoint';
 
 console.log('API_URL: ', API_URL);
 
@@ -12,17 +12,9 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
 export const authenticate = (userData) => {
-    console.log("9");
     return {
         type: AUTHENTICATE,
-        jwtToken: userData.jwtToken,
-        userId: userData.userId,
-        name: userData.name,
-        email: userData.email,
-        picture: userData.picture,
-        providerUid: userData.providerUid,
-        provider: userData.provider,
-        expiryDate: userData.expiryDate,
+        userData: userData
     };
 }
 
@@ -40,45 +32,24 @@ const getUserInfo = (jwtToken, callback) => {
         .catch(error => callback(error));
 }
 
-export const login = (provider, token, callback) => {
+export const login = (userData, callback) => {
     return dispatch => {
         fetch(`${API_URL}/user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                token: token,
-                provider: provider
-            })
+            body: JSON.stringify(userData)
         })
             .then(response => response.json())
             .then(jsonData => {
-                // console.log('ResData: ', jsonData);
-                getUserInfo(jsonData.jwtToken, (error, result) => {
-                    if (error) {
-                        console.log("Error while fetching user data: ", error);
-                        return callback(error);
-                        // throw error;
-                    } else {
-                        console.log("User Info: ", result);
-                        const expirationDate = new Date(new Date().getTime() + 3600 * 1000)
-                        dispatch({
-                            type: AUTHENTICATE,
-                            jwtToken: jsonData.jwtToken,
-                            userId: result._id,
-                            name: result.name,
-                            email: result.email,
-                            picture: result.picture,
-                            providerUid: result.providerUid,
-                            provider: result.provider,
-                            expiryDate: expirationDate,
-                        });
-                        saveToStorage(jsonData.jwtToken, result, expirationDate);
-                        return callback(null, 'DONE');
-
-                    }
+                console.log('ResData: ', jsonData);
+                dispatch({
+                    type: AUTHENTICATE,
+                    userData: jsonData.user
                 });
+                saveToStorage(jsonData.user);
+                return callback(null, 'DONE');
             })
             .catch(error => {
                 console.log("error in dispatch: ", error);
@@ -103,6 +74,10 @@ const socialSignout = async (provider, callback) => {
         LoginManager.logOut();
         return callback(null, 'SIGNOUT');
     }
+    if (provider === 'PHONE') {
+        await auth().signOut();
+        return callback(null, 'SIGNOUT')
+    }
 };
 
 export const logout = (callback) => {
@@ -121,15 +96,15 @@ export const logout = (callback) => {
     }
 };
 
-const saveToStorage = (jwtToken, userdata, expirationDate) => {
+const saveToStorage = (userdata) => {
     AsyncStorage.setItem('userData', JSON.stringify({
-        jwtToken: jwtToken,
         userId: userdata._id,
         name: userdata.name,
+        fisheryName: userdata.fisheryName,
+        phone: userdata.phone,
         email: userdata.email,
         picture: userdata.picture,
         providerUid: userdata.providerUid,
         provider: userdata.provider,
-        expiryDate: expirationDate.toISOString(),
     }));
 }

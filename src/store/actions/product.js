@@ -10,27 +10,21 @@ export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 const getUserDetails = async (callback) => {
     const userData = await AsyncStorage.getItem('userData');
     const transformedUserData = JSON.parse(userData);
-    const { jwtToken, userId } = transformedUserData;
-    return callback(jwtToken, userId);
+    const { userId } = transformedUserData;
+    return callback(userId);
 };
 
 export const getAllProducts = (callback) => {
-    let jwtToken;
     let userId;
-    getUserDetails((token, uid) => {
-        console.log("token: ", token);
+    getUserDetails((uid) => {
         console.log("uid: ", uid);
-        jwtToken = token;
         userId = uid;
 
     })
 
     return dispatch => {
         fetch(`${API_URL}/product`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${jwtToken}`
-            }
+            method: 'GET'
         })
             .then(response => response.json())
             .then(jsonData => {
@@ -78,12 +72,9 @@ export const createProduct = (productData, callback) => {
     payload.append('image', { uri: Platform.OS === 'android' ? productData.image.uri : photo.uri.replace('file://', ''), type: productData.image.type, name: productData.image.fileName });
     // payload.append('Content-Type', productData.image.type)
     console.log('payload', payload);
-    let jwtToken;
     let userId;
-    getUserDetails(userInfo => {
-        const { token, uid } = userInfo;
-        jwtToken = token;
-        userId = uid;
+    getUserDetails(userId => {
+        userId = userId;
     });
     return dispatch => {
         fetch(`${API_URL}/product`, {
