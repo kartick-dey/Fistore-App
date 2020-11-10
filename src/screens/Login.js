@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, ActivityIndicator, Alert, TextInput, Text } from 'react-native';
 import { FacebookApi } from '../api/Facebook';
 import { GoogleApi } from '../api/Google';
@@ -14,6 +14,7 @@ import BuildUserInfo from '../models/buildUserData';
 const Login = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSocialLogin, setIsSocialLogin] = useState(true);
+  const [isSocialLoginMode, setIsSocialLoginMode] = useState(false);
   // const [phoneNumber, setPhoneNumber] = useState(0);
 
   const bgGoogleButton = colors.primary; // '#DB4437'
@@ -23,8 +24,10 @@ const Login = (props) => {
     code: '',
     name: '',
     email: '',
-    fisheryName: ''
+    fisheryName: '',
+    providerUid: ''
   };
+
 
   const dispatch = useDispatch();
 
@@ -108,7 +111,7 @@ const Login = (props) => {
               initialValues={initialValues}
               onSubmit={signInWithPhone}
               socialLogin={isVisibleSocialLogin}
-              setIsLoading={setIsLoadingState}>
+              setIsLoading={() => setIsSocialLoginMode(!isSocialLoginMode)}>
               <Wizard.Step>
                 {({ changeValue, values }) => (
                   <View style={{ paddingVertical: 10 }}>
@@ -177,13 +180,13 @@ const Login = (props) => {
               </View>
               <View style={{ marginTop: 30 }}>
                 <LoginButton
-                  isLoading={isLoading}
+                  isLoading={isSocialLoginMode}
                   onPress={onGooglePress}
                   bgColor={bgGoogleButton}
                   iconName='google-plus'
                   type="Google"></LoginButton>
                 <LoginButton
-                  isLoading={isLoading}
+                  isLoading={isSocialLoginMode}
                   onPress={onFacebookPress}
                   bgColor={bgFacebookButton}
                   iconName='facebook'

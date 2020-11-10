@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
-
+import { getAsyncStorage } from '../asyncStorage/index';
 import BrandLogo from '../components/brandLogo';
 import * as authActions from '../store/actions/auth';
 
@@ -13,7 +13,7 @@ const Splash = (props) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const userData = await AsyncStorage.getItem('userData');
+      const userData = await getAsyncStorage('userData');
       if (!userData) {
         props.navigation.navigate('Auth');
         return;

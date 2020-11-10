@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: width - 10,
         height: width * 0.15,
-        borderRadius: 0,
-        elevation: 1
+        // borderRadius: 0,
+        // elevation: 1
     },
     icon: {
         justifyContent: 'flex-start',

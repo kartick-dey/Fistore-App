@@ -1,5 +1,6 @@
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { setAsyncStorage, clearAsyncStorage } from '../../asyncStorage/index';
 import { LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -48,7 +49,19 @@ export const login = (userData, callback) => {
                     type: AUTHENTICATE,
                     userData: jsonData.user
                 });
-                saveToStorage(jsonData.user);
+                const user = jsonData.user;
+                const userData = {
+                    userId: user._id,
+                    name: user.name,
+                    fisheryName: user.fisheryName,
+                    phone: user.phone,
+                    email: user.email,
+                    picture: user.picture,
+                    providerUid: user.providerUid,
+                    provider: user.provider,
+                };
+                setAsyncStorage('userData', userData);
+                // saveToStorage(jsonData.user);
                 return callback(null, 'DONE');
             })
             .catch(error => {
@@ -89,22 +102,23 @@ export const logout = (callback) => {
                 console.log("Error while signout");
                 return callback('Logout failed');
             }
-            AsyncStorage.removeItem('userData');
+            clearAsyncStorage();
+            // AsyncStorage.removeItem('userData');
             dispatch({ type: LOGOUT });
             return callback(null, "Loggedout");
         });
     }
 };
 
-const saveToStorage = (userdata) => {
-    AsyncStorage.setItem('userData', JSON.stringify({
-        userId: userdata._id,
-        name: userdata.name,
-        fisheryName: userdata.fisheryName,
-        phone: userdata.phone,
-        email: userdata.email,
-        picture: userdata.picture,
-        providerUid: userdata.providerUid,
-        provider: userdata.provider,
-    }));
-}
+// const saveToStorage = (userdata) => {
+//     AsyncStorage.setItem('userData', JSON.stringify({
+//         userId: userdata._id,
+//         name: userdata.name,
+//         fisheryName: userdata.fisheryName,
+//         phone: userdata.phone,
+//         email: userdata.email,
+//         picture: userdata.picture,
+//         providerUid: userdata.providerUid,
+//         provider: userdata.provider,
+//     }));
+// }
